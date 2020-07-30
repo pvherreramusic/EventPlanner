@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const apiRouter = require("./api");
 
 const server = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 client.connect();
 
