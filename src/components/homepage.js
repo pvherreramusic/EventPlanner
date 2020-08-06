@@ -2,33 +2,26 @@ import React from 'react'
 import {
   Container,
   Divider,
-  Dropdown,
   Grid,
   Header,
   Image,
   List,
-  Menu,
   Segment,
 } from 'semantic-ui-react'
 
-const FixedMenuLayout = () => (
+const HomePage = () => (
   <div>
     
 
     <Container text style={{ marginTop: '7em' }}>
-      <Header as='h1'>Semantic UI React Fixed Template</Header>
-      <p>This is a basic fixed menu template using fixed size containers.</p>
+      <Header as='h1'>EVENT PLANNNER</Header>
+      <p>THANK YOU FOR USING THIS APP TO PLAN A EVENT WITH YOUR GROUP</p>
       <p>
-        A text container is used for the main container, which is useful for single column layouts.
+       LETS PARTY!
       </p>
 
-      <Image src='/images/wireframe/media-paragraph.png' style={{ marginTop: '2em' }} />
-      <Image src='/images/wireframe/paragraph.png' style={{ marginTop: '2em' }} />
-      <Image src='/images/wireframe/paragraph.png' style={{ marginTop: '2em' }} />
-      <Image src='/images/wireframe/paragraph.png' style={{ marginTop: '2em' }} />
-      <Image src='/images/wireframe/paragraph.png' style={{ marginTop: '2em' }} />
-      <Image src='/images/wireframe/paragraph.png' style={{ marginTop: '2em' }} />
-      <Image src='/images/wireframe/paragraph.png' style={{ marginTop: '2em' }} />
+      <Image src='https://media.timeout.com/images/105347841/630/472/image.jpg' style={{ marginTop: '2em' }} />
+
     </Container>
 
     <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
@@ -90,4 +83,4 @@ const FixedMenuLayout = () => (
   </div>
 )
 
-export default FixedMenuLayout
+export default HomePage
