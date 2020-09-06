@@ -84456,7 +84456,7 @@ const Comments = ({
 }) => {
   const [comments, setComments] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    fetch(`http://localhost:3001/api/comments/eventcomments/${userid}`).then(response => response.json()).then(data => {
+    fetch(`/api/comments/eventcomments/${userid}`).then(response => response.json()).then(data => {
       setComments(data.eventComment);
     });
   }, []);
@@ -84570,7 +84570,7 @@ const FormForNewEvent = ({
   const [value, setValue] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     async function getCharacters() {
-      const response = await fetch(`http://localhost:3001/api/groups/${userid}/group`);
+      const response = await fetch(`/api/groups/${userid}/group`);
       const body = await response.json();
       setItems(body.group.map(({
         group_name,
@@ -84685,7 +84685,7 @@ const SelectGroups = ({
   const [groupEvents, setGroupEvents] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     async function getEvents() {
-      const response = await fetch(`http://localhost:3001/api/events/bygroup/${value}`);
+      const response = await fetch(`/api/events/bygroup/${value}`);
       const body = await response.json();
       setGroupEvents(body.evnt.map(({
         title,
@@ -84708,7 +84708,7 @@ const SelectGroups = ({
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     async function getCharacters() {
-      const response = await fetch(`http://localhost:3001/api/groups/${userid}/group`);
+      const response = await fetch(`/api/groups/${userid}/group`);
       const body = await response.json();
       setItems(body.group.map(({
         group_name,

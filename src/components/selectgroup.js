@@ -13,7 +13,7 @@ const SelectGroups = ({ userid }) => {
   useEffect(() => {
     async function getEvents() {
       const response = await fetch(
-        `http://localhost:3001/api/events/bygroup/${value}`
+        `/api/events/bygroup/${value}`
       );
       const body = await response.json();
       setGroupEvents(
@@ -37,7 +37,7 @@ const SelectGroups = ({ userid }) => {
   useEffect(() => {
     async function getCharacters() {
       const response = await fetch(
-        `http://localhost:3001/api/groups/${userid}/group`
+        `/api/groups/${userid}/group`
       );
       const body = await response.json();
       setItems(

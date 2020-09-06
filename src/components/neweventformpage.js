@@ -24,7 +24,7 @@ const FormForNewEvent = ({ userid }) => {
 
   useEffect(() => {
     async function getCharacters() {
-      const response = await fetch(`http://localhost:3001/api/groups/${ userid }/group`);
+      const response = await fetch(`/api/groups/${ userid }/group`);
       const body = await response.json();
       setItems(body.group.map(({ group_name , id},) => ({ label: group_name, value: id })));
     }

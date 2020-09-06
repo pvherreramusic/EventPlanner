@@ -5,7 +5,7 @@ const Comments = ({userid}) => {
 
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/comments/eventcomments/${userid}`)
+    fetch(`/api/comments/eventcomments/${userid}`)
       .then((response) => response.json())
       .then((data) => {
         setComments(data.eventComment);
