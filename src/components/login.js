@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Button, Form, Icon, Modal, Header, Menu } from "semantic-ui-react";
+import { Button, Form, Modal, Header, Menu } from "semantic-ui-react";
 
 const Login = (props) => {
   const { user, setUser } = props;

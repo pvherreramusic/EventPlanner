@@ -1,56 +1,181 @@
 const { client } = require("./client");
 
-async function getAllEvents() {
-  const { rows } = await client.query(`
-          SELECT *
-          FROM events;
-          `);
-
-  return rows;
-}
-
-async function getEventById(eventId) {
+async function getEventByEventId(userId) {
   try {
-    const {
-      rows: [event],
-    } = await client.query(
-      `
-              SELECT *
-              FROM events
-              WHERE id=$1;
-              `,
-      [eventId]
+    const { rows} = await client.query(`
+    SELECT
+    event.event_id,
+    event.user_id,
+    event.group_id,
+    event.title,
+    event.description,
+    event.date,
+    event.time,
+    event.location,
+    users.name
+    
+    
+    
+FROM
+    event
+INNER JOIN users ON (event.user_id = users.id)
+
+GROUP BY 
+event.event_id,
+event.title,
+event.user_id,
+    event.description,
+    event.date,
+    event.time,
+    event.location,
+    users.name,
+    event.group_id
+    
+    
+HAVING
+event.event_id = $1
+    `,
+    [userId]
+    
     );
 
+return rows;
+}
+  catch (error) {
+    throw error;
+  }
+}
 
-    if (!event) {
-      throw {
-        name: "EventNotFoundError",
-        description: "Could not find event with that eventId",
-      };
-    }
+///http://localhost:3001/api/events/event/
+async function getEventByUserId(userId) {
+  try {
+    const {
+      rows
+    } = await client.query(
+      `
+      SELECT
+      event.event_id,
+      event.user_id,
+      event.group_id,
+      event.title,
+      event.description,
+      event.date,
+      event.time,
+      event.location,
+      users.name
+      
+      
+      
+  FROM
+      event
+ INNER JOIN users ON (event.user_id = users.id)
+ 
+  GROUP BY 
+ event.event_id,
+ event.title,
+ event.user_id,
+      event.description,
+      event.date,
+      event.time,
+      event.location,
+      users.name,
+      event.group_id
+      
+      
+  HAVING
+  event.event_id = $1
+            
+        `,
+        [userId]
+    );
 
+    
 
-    return event;
+    return rows;
   } catch (error) {
-    console.error(error);
+    throw error;
+  }
+}
+///bygroup/
+async function getEventByGroupId(userid) {
+  try {
+    const {
+      rows
+    } = await client.query(
+      `
+      SELECT
+      event.event_id,
+      event.user_id,
+      event.group_id,
+      event.title,
+      event.description,
+      event.date,
+      event.time,
+      event.location,
+      users.name
+      
+      
+      
+  FROM
+      event
+ INNER JOIN users ON (event.user_id = users.id)
+ 
+  GROUP BY 
+ event.event_id,
+ event.title,
+ event.user_id,
+      event.description,
+      event.date,
+      event.time,
+      event.location,
+      users.name,
+      event.group_id
+      
+      
+  HAVING
+  event.event_id = $1
+
+            
+        `,
+        [userid]
+    );
+
+    
+
+    return rows;
+  } catch (error) {
     throw error;
   }
 }
 
 
-async function createEvent({ title, description, isOwner}) {
+
+
+
+
+
+async function getAllEvents() {
+  const { rows } = await client.query(`
+          SELECT *
+          FROM event;
+          `);
+
+  return rows;
+}
+
+
+
+async function createEvent({user_id, group_id, title, description, isComfirmed = false, date, time, location}) {
   try {
     const {
       rows: [event],
     } = await client.query(
       `
-              INSERT INTO products (title, description, isOwner)
-              VALUES ($1, $2, $3)
-              ON CONFLICT (title) DO NOTHING
+              INSERT INTO event (user_id, group_id, title, description, isComfirmed, date, time, location)
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
               RETURNING *;
               `,
-      [title, description, isOwner]
+      [user_id, group_id, title, description, isComfirmed, date, time, location]
     );
 
     return event;
@@ -62,6 +187,7 @@ async function createEvent({ title, description, isOwner}) {
 
 async function updateEvent(id, fields = {}) {
   const setString = Object.keys(fields)
+ 
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
 
@@ -74,9 +200,10 @@ async function updateEvent(id, fields = {}) {
       rows: [event],
     } = await client.query(
       `
-              UPDATE products
+              UPDATE event
               SET ${setString}
               WHERE id=${id}
+             
               RETURNING *;
               `,
       Object.values(fields)
@@ -106,14 +233,11 @@ async function deleteEvent(eventId) {
 }
 
 module.exports = {
-deleteProduct,
 getAllEvents,
-getEventById,
+getEventByUserId,
+getEventByGroupId,
 createEvent,
 updateEvent,
-deleteEvent
-
-
-
+getEventByEventId
 
 }

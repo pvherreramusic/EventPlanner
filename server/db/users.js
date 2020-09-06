@@ -36,14 +36,14 @@ const promisifiedVerify = (token) => new Promise(
   }
 );
 
-async function createUser({ name, username, password, email }) {
+async function createUser({name, username, password, email}) {
   const hashedPassword = await promisifiedHash(password);
 
   const {
     rows: [user],
   } = await client.query(
     `
-      INSERT INTO users (name, username, password, email)
+      INSERT INTO users (name, username, password, email )
       VALUES ($1, $2, $3, $4)
       ON CONFLICT (email) DO NOTHING
       RETURNING *;
@@ -65,6 +65,7 @@ async function getAllUsers() {
   const { rows } = await client.query(`
         SELECT *
         FROM users;
+        
         `);
 
   return rows;
@@ -72,32 +73,65 @@ async function getAllUsers() {
 
 
 
-async function getUserById(userId) {
-  try {
-    const {
-      rows: [user],
-    } = await client.query(
-      `
-            SELECT *
-            FROM users
-            WHERE id=$1;
-            `,
-      [userId]
-    );
-
-    if (!user) {
-      throw {
-        name: "UserNotFoundError",
-        description: "Could not find user with that userId",
-      };
+async function getUserByUserId(id) {
+    try {
+      const {
+        rows
+      } = await client.query(
+        `
+              SELECT name
+              FROM users
+              WHERE id= $1
+  
+  
+              
+          `,
+          [id]
+      );
+  
+      
+  
+      return rows;
+    } catch (error) {
+      throw error;
     }
-
-    return user;
-  } catch (error) {
-    console.error(error);
-    throw error;
   }
-}
+
+
+  async function getUserByGroupId(id) {
+    try {
+      const {
+        rows
+      } = await client.query(
+        `
+        SELECT
+        users.id,
+        groups.id
+        groups.user_id
+     FROM
+         users
+     INNER JOIN groups ON (users.id = groups.user_id)
+     
+     GROUP BY
+     users.id,
+     groups.id,
+     groups.user_id
+     HAVING
+     users.id= $1
+  
+  
+              
+          `,
+          [id]
+      );
+  
+      
+  
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 async function updateUser(id, fields = {}) {
   const setString = Object.keys(fields)
@@ -190,13 +224,16 @@ const loginWithToken = async (token = "") => {
   return getUserById(id);
 };
 
+
+
+
 module.exports = {
   createUser,
   getAllUsers,
   updateUser,
-  getUserById,
   doesUserExist,
   login,
   loginWithToken,
   promisifiedVerify,
+  getUserByUserId
 };

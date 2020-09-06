@@ -2,24 +2,39 @@ const { client } = require("./client");
 
 async function getAllComments() {
   const { rows } = await client.query(`
-    SELECT *
-    FROM reviews;
+  SELECT *
+  FROM comment
+
   `);
 
   return rows;
 }
 
-async function getCommentsById(commentId) {
+async function getCommentsById(userId) {
   try {
     const {
       rows: [comment],
     } = await client.query(
       `
-      SELECT *
+      SELECT
+      comment.id
+      comment.message,
+      comment.user_id,
+      comment.event_id,
+      users.name
       FROM comment
-      WHERE id=$1;
-        `,
-      [commentId]
+      INNER JOIN event ON (comment.event_id = event.id)
+      INNER JOIN users ON (comment.user_id = users.id)
+      GROUP BY
+      comment.message,
+      comment.user_id,
+      comment.event_id,
+      users.name
+      HAVING
+      comment.event_id = $1
+  
+      `,
+      [userId]
     );
 
     if (!comment) {
@@ -35,75 +50,72 @@ async function getCommentsById(commentId) {
   }
 }
 
-//getReviewsByUserId - Will this works? need to get multiple reviews.
-async function getCommentByUserId(userId) {
+async function getCommentEventId(userId) {
   try {
-    const {
-      rows: [comment],
-    } = await client.query(
+    const { rows } = await client.query(
       `
-            SELECT *
-            FROM reviews
-            WHERE user_id=$1;
+      SELECT
+      comment.id,
+      comment.message,
+      comment.user_id,
+      comment.event_id,
+      users.name,
+      event.title
+      FROM comment
+      INNER JOIN users ON (comment.id = users.id)
+      INNER JOIN event ON (comment.event_id = event.event_id)
+      GROUP BY
+      comment.message,
+      comment.user_id,
+      comment.event_id,
+      users.name,
+      event.title,
+      comment.id
+      HAVING
+     comment.user_id= $1
+
+
+            
         `,
       [userId]
     );
 
-    if (!comment) {
-      throw {
-        name: "ReviewByUserIdNotFoundError",
-        description: `Couldn't find review with userId: ${userId}`,
-      };
-    }
-
-    return comment;
+    return rows;
   } catch (error) {
     throw error;
   }
 }
 
-//getReviewsByProductId
-async function getCommentByEventId(eventId) {
+async function getCommentUserId(userId) {
   try {
-    const {
-      rows: [comment],
-    } = await client.query(
+    const { rows } = await client.query(
       `
-      SELECT *
-      FROM reviews
-      WHERE product_id=$1;
-      `,
-      [eventId]
+            SELECT *
+            FROM comment
+            WHERE user_id= $1
+
+
+            
+        `,
+      [userId]
     );
 
-    if (!comment) {
-      throw {
-        name: "ReviewByUserIdNotFoundError",
-        description: `Couldn't find review with userId: ${userId}`,
-      };
-    }
-
-    return comment;
+    return rows;
   } catch (error) {
     throw error;
   }
 }
 
-
-async function createComment({ title, body, userId, eventId }) {
-  if (!title || !userId || !eventId) {
-    return null;
-  }
-
+async function createComment({ message, user_id, event_id }) {
   const {
     rows: [comment],
   } = await client.query(
     `
-        INSERT INTO reviews(title, body, user_id, event_id)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO comment(message, user_id, event_id)
+        VALUES ($1, $2, $3)
         RETURNING *;
     `,
-    [title, body || null, userId, productId]
+    [message, user_id, event_id]
   );
 
   return comment;
@@ -111,10 +123,6 @@ async function createComment({ title, body, userId, eventId }) {
 
 //updateReview
 async function updateComment(id, fields = {}) {
-  if (!id) {
-    return null;
-  }
-
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
@@ -127,7 +135,7 @@ async function updateComment(id, fields = {}) {
     rows: [updatedComment],
   } = await client.query(
     `
-        UPDATE reviews
+        UPDATE comment
         SET ${setString}
         WHERE id=${id}
         RETURNING *;
@@ -138,12 +146,11 @@ async function updateComment(id, fields = {}) {
   return updatedComment;
 }
 
-
 module.exports = {
-getCommentByUserId,
-getAllComments,
-getCommentsById,
-updateComment,
-getCommentByEventId,
-createComment
+  getAllComments,
+  getCommentsById,
+  updateComment,
+  createComment,
+  getCommentEventId,
+  getCommentUserId,
 };

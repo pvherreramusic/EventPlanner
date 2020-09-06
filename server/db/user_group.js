@@ -1,57 +1,55 @@
 const { client } = require("./client");
 
 
-async function getInvitationsById({group_id, inviter_id, invitee_id}) {
+async function getUserGroupById({user_id, group_id}) {
     try {
       const {
-        rows: [invitations],
+        rows: [user_group],
       } = await client.query(
         `
               SELECT *
-              FROM invitations
-              WHERE group_id=$1;
-              WHERE inviter_id=$2;
-              WHERE invitee_id=$3;
+              FROM user_group
+
 
               `,
-        [group_id, inviter_id, invitee_id]
+        [user_id, group_id]
       );
   
-      if (!invitations) {
+      if (!user_group) {
         throw {
-          name: "NotFoundError",
-          description: "Could not find user with that Invite ID",
+          name: "UserNotFoundError",
+          description: "Could not find user with that userId",
         };
       }
   
-      return invitations;
+      return user_group;
     } catch (error) {
       console.error(error);
       throw error;
     }
   }
 
-  async function createInvitations({group_id, inviter_id, invitee_id, status}) {
+  async function createUG({group_id, user_id}) {
     try {
       const {
-        rows: [invitations]
+        rows: [user_group]
       } = await client.query(
         `
-        INSERT INTO invitations (group_id ,inviter_id, invitee_id, status)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO user_group (group_id ,user_id)
+        VALUES ($1, $2)
         RETURNING *;
         `,
-        [group_id, inviter_id, invitee_id, status]
+        [group_id, user_id]
       );
   
-      return invitations;
+      return user_group;
     } catch (error) {
       console.log(error);
       throw error;
     }
   }
 
-  async function updateInvitations(id, fields = {}) {
+  async function updateUserGroup(id, fields = {}) {
     const setString = Object.keys(fields)
       .map((key, index) => `"${key}"=$${index + 1}`)
       .join(", ");
@@ -62,10 +60,10 @@ async function getInvitationsById({group_id, inviter_id, invitee_id}) {
   
     try {
       const {
-        rows: [invitations],
+        rows: [user_group],
       } = await client.query(
         `
-              UPDATE invitations
+              UPDATE user_group
               SET ${setString}
               WHERE id=${id}
               RETURNING *;
@@ -73,25 +71,25 @@ async function getInvitationsById({group_id, inviter_id, invitee_id}) {
         Object.values(fields)
       );
   
-      return invitations;
+      return user_group;
     } catch (error) {
       console.error(error);
       throw error;
     }
   }
 
-  async function getAllInvitations() {
+  async function getAllUserGroup() {
     const { rows } = await client.query(`
           SELECT *
-          FROM invitations;
+          FROM user_group;
           `);
   
     return rows;
   }
 
   module.exports = {
-  getAllInvitations,
-  getInvitationsById,
-  updateInvitations,
-  createInvitations,
+  getUserGroupById,
+  createUG,
+  updateUserGroup,
+  getAllUserGroup,
     };

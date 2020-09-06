@@ -1,112 +1,128 @@
 const express = require("express");
-const productsRouter = express.Router();
+const eventRouter = express.Router();
+const { verifyToken } = require("./utils");
 const {
-  getAllProducts,
-  createProduct,
-  getProductById,
-  updateProduct,
-  deleteProduct,
-} = require("../db");
+  createEvent,
+  updateEvent,
+  getEventByUserId,
+  getEventById,
+  getAllEvents,
+  getEventByGroupId,
+  
+  
+  
+} = require('../db');
 
-productsRouter.use((req, res, next) => {
-  console.log("A request is being made to /products");
 
+
+
+eventRouter.use((req, res, next) => {
+  console.log("A request is being made to /event");
   next();
 });
 
-productsRouter.get("/", async (req, res) => {
-  const products = await getAllProducts();
 
-  console.log("got products: ", products);
 
-  res.send({
-    message: "Successfully retrieved products",
-    products,
-    status: true,
-  });
+eventRouter.get('/allevents', async(req, res, next) => {
+  try {
+      const events = await getAllEvents();
+
+      res.send({
+         events
+      })
+  } catch (error) {
+      next(error);
+  }
 });
 
-productsRouter.get("/:eventId", async (req, res, next) => {
-  const { eventId } = req.params;
-  console.log("entered productId", eventId);
+
+eventRouter.get("/event/:userId", async (req, res, next) => {
+  const {userId}  = req.params
 
   try {
-    const event = await getEventById(eventId);
+    const userEvent = await getEventByUserId(userId);
 
-    console.log("got product: ", event);
-
-    if (!product) {
+    if (!userEvent) {
       return res.status(404).json({
-        error: `No product found with Id: ${event}}`,
+        error: `No user found with Id: ${userId}`
       });
     }
 
     res.send({
-      event,
+      userEvent
     });
   } catch (error) {
-    throw error;
+    next(error);
+  }
+});
+
+// eventRouter.get('/:eventId/anevent', async(req, res, next) => {
+
+//   const { eventId } = req.params;
+  
+ 
+//   try {
+    
+//     const anEvent = await getEventByEventId(eventId)
+    
+//     res.send(anEvent);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+eventRouter.get('/bygroup/:groupid',async(req, res, next) => {
+
+  const { groupid } = req.params;
+  
+ 
+  try {
+    
+    const evnt = await getEventByGroupId(groupid);
+    
+    if (!evnt) {
+      return res.status(404).json({
+        error: `No user found with Id: ${groupid}`
+      });
+    }
+
+    res.send({
+      evnt
+    });
+  } catch (error) {
+    next(error);
   }
 });
 
 
-productsRouter.patch("/:eventId", async (req, res, next) => {
+eventRouter.patch("/:eventId", verifyToken, async (req, res, next) => {
   const { eventId } = req.params;
-  const { title, description, price, inventory } = req.body;
+  const { userId, title, description} = req.body;
   const updateFields = {};
 
-  if (title) {
+  if (userId) {
+    updateFields.userId = userId;
+  }
+
+  if (price) {
     updateFields.title = title;
   }
 
-  if (description) {
+  if (quantity) {
     updateFields.description = description;
   }
 
   try {
-    const originalEvent = await getProductById(eventId);
+    const eventByID = await getEventById(eventId);
 
-    if (originalEvent) {
-      const updatedEvent = await updateProduct(eventId, updateFields);
-      res.send({ event:  updatedEvent});
+    if (eventByID) {
+      const updatedEvent = await updateEvent(eventId, updateFields);
+      res.send({ event: updatedEvent });
     } else {
       next({
         name: "UpdateEventError",
-        message: "Error updating event",
+        description: "Error updating Event",
       });
-    }
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
-
-productsRouter.post("/", async (req, res, next) => {
-  const { title, description, price, inventory } = req.body;
-
-  const productData = { title, description, price, inventory };
-// if(!user)
-  try {
-    const product = await createProduct(productData);
-
-    if (product) {
-      res.send({ product });
-    } else {
-      next({
-        name: "CreateProductError",
-        message: "Error creating product",
-      });
-    }
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
-
-productsRouter.delete("/:productId", async (req, res, next) => {
-  try {
-    const product = await deleteProduct(req.params.productId);
-
-    if (routine) {
-      res.send({ product });
     }
   } catch (error) {
     console.error(error);
@@ -114,4 +130,38 @@ productsRouter.delete("/:productId", async (req, res, next) => {
   }
 });
 
-module.exports = productsRouter;
+
+eventRouter.post("/newevent", verifyToken, async (req, res, next) => {
+
+  try {
+    const {
+      title,
+      description,
+      date,
+      time,
+      location,
+      group_id,
+      
+      
+      
+    } = req.body;
+
+    const eventInfo = {
+      user_id: req.id.id,
+      group_id,
+      title,
+      description,
+      date,
+      time,
+      location,
+    };
+
+    await createEvent(eventInfo);
+
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = eventRouter;

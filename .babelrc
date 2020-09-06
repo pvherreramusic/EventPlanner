@@ -6,10 +6,5 @@
       // "@babel/preset-env",
       "@babel/preset-react"
     ]
-    // "plugins": [
-    //   "transform-class-properties",
-    //   "transform-decorators",
-    //   "transform-react-constant-elements",
-    //   "transform-react-inline-elements"
-    // ]
-  }  
+   , "plugins": ["@babel/plugin-proposal-class-properties"]
+  }
