@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Example, CommentForm, Comments} from "./index";
+import { Example, CommentForm, Comments} from "../index";
 
 
 const SelectGroups = ({ userid }) => {
