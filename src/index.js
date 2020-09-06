@@ -3,7 +3,7 @@ import axios from "axios";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { HomePage, Nav, FormForNewEvent, CreateGroup, MainPage, GroupPage} from "./index";
+import { HomePage, Nav, FormForNewEvent, CreateGroup, MainPage, GroupPage} from "./components";
 
 const App = () => {
   const [user, setUser] = useState({});
