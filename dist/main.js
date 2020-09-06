@@ -84222,43 +84222,43 @@ const HomePage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a
 /*!*********************************!*\
   !*** ./src/components/index.js ***!
   \*********************************/
-/*! exports provided: HomePage, Nav, Login, FormForNewEvent, Example, GroupPage, CommentForm, Comments, CreateGroup, SelectGroups, MainPage */
+/*! exports provided: App, GroupPage, CreateGroup, HomePage, MainPage, Comments, Nav, Login, FormForNewEvent, SelectGroups, Example */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _homepage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homepage */ "./src/components/homepage.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HomePage", function() { return _homepage__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var _commentbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./commentbox */ "./src/components/commentbox.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "App", function() { return _commentbox__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./nav */ "./src/components/nav.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Nav", function() { return _nav__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _groupeventpage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./groupeventpage */ "./src/components/groupeventpage.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GroupPage", function() { return _groupeventpage__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./login */ "./src/components/login.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Login", function() { return _login__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _groupsforms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./groupsforms */ "./src/components/groupsforms.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CreateGroup", function() { return _groupsforms__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _neweventformpage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./neweventformpage */ "./src/components/neweventformpage.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "FormForNewEvent", function() { return _neweventformpage__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony import */ var _homepage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./homepage */ "./src/components/homepage.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HomePage", function() { return _homepage__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _userevent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./userevent */ "./src/components/userevent.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Example", function() { return _userevent__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony import */ var _mainpage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mainpage */ "./src/components/mainpage.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MainPage", function() { return _mainpage__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _groupeventpage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./groupeventpage */ "./src/components/groupeventpage.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GroupPage", function() { return _groupeventpage__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony import */ var _mappcoments__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mappcoments */ "./src/components/mappcoments.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Comments", function() { return _mappcoments__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
-/* harmony import */ var _commentbox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./commentbox */ "./src/components/commentbox.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CommentForm", function() { return _commentbox__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./nav */ "./src/components/nav.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Nav", function() { return _nav__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
-/* harmony import */ var _mappcoments__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./mappcoments */ "./src/components/mappcoments.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Comments", function() { return _mappcoments__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./login */ "./src/components/login.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Login", function() { return _login__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
-/* harmony import */ var _groupsforms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./groupsforms */ "./src/components/groupsforms.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CreateGroup", function() { return _groupsforms__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+/* harmony import */ var _neweventformpage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./neweventformpage */ "./src/components/neweventformpage.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "FormForNewEvent", function() { return _neweventformpage__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
 /* harmony import */ var _selectgroup__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./selectgroup */ "./src/components/selectgroup.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SelectGroups", function() { return _selectgroup__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
-/* harmony import */ var _mainpage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./mainpage */ "./src/components/mainpage.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MainPage", function() { return _mainpage__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+/* harmony import */ var _userevent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./userevent */ "./src/components/userevent.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Example", function() { return _userevent__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
 
 
@@ -84672,7 +84672,7 @@ const FormForNewEvent = ({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./src/components/index.js");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../index */ "./src/index.js");
 
 
 

@@ -28,7 +28,7 @@ const App = () => {
       
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/groupevent" exact render={() => <MainPage userid={user.id} />}/>
-        <Route path= "/neweventform" exact render={() => <FormForNewEvent userid={user.id} />  }/>
+        <Route path= "/neweventform" exact render={() => <FormForNewEvent userid={user.id} />}/>
         <Route path= "/createnewgroup" exact component={CreateGroup}/>
 
 
