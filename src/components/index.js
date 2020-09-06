@@ -1,4 +1,4 @@
-export { default as App} from "./commentbox";
+export { default as CommentForm} from "./commentbox";
 export { default as GroupPage } from "./groupeventpage";
 export { default as CreateGroup } from "./groupsforms";
 export { default as HomePage } from "./homepage"

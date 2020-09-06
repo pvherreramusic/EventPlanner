@@ -4,7 +4,7 @@ import { Button, Form, Header } from "semantic-ui-react";
 
 
 
-const App = ({userid}) => {
+const CommentForm = ({userid}) => {
   const initialFormData = {
     message : "",
     event_id: ""
@@ -121,4 +121,4 @@ onChange={handleChange}
 
 
  
-export default App;
+export default CommentForm;

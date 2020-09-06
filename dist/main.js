@@ -84009,7 +84009,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const App = ({
+const CommentForm = ({
   userid
 }) => {
   const initialFormData = {
@@ -84088,7 +84088,7 @@ const App = ({
   }, "Submit Your Comment")))));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (App);
+/* harmony default export */ __webpack_exports__["default"] = (CommentForm);
 
 /***/ }),
 
@@ -84222,13 +84222,13 @@ const HomePage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a
 /*!*********************************!*\
   !*** ./src/components/index.js ***!
   \*********************************/
-/*! exports provided: App, GroupPage, CreateGroup, HomePage, MainPage, Comments, Nav, Login, FormForNewEvent, SelectGroups, Example */
+/*! exports provided: CommentForm, GroupPage, CreateGroup, HomePage, MainPage, Comments, Nav, Login, FormForNewEvent, SelectGroups, Example */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _commentbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./commentbox */ "./src/components/commentbox.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "App", function() { return _commentbox__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CommentForm", function() { return _commentbox__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
 /* harmony import */ var _groupeventpage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./groupeventpage */ "./src/components/groupeventpage.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GroupPage", function() { return _groupeventpage__WEBPACK_IMPORTED_MODULE_1__["default"]; });
@@ -84672,7 +84672,7 @@ const FormForNewEvent = ({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../index */ "./src/index.js");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./src/components/index.js");
 
 
 
