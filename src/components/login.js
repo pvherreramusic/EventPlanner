@@ -1,6 +1,13 @@
+
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Button, Form, Modal, Header, Menu } from "semantic-ui-react";
+import {   Button,
+  Form,
+  Header,
+  Menu,
+  Modal,
+  } from "semantic-ui-react";
 
 const Login = (props) => {
   const { user, setUser } = props;
@@ -49,7 +56,7 @@ const Login = (props) => {
       <Menu.Item position="right">
         <Modal
           dimmer="blurring"
-          trigger={<Button>Register</Button>}
+          trigger={<Button marginleft="0.5em">Register</Button>}
           basic
           size="small"
         >
@@ -91,7 +98,7 @@ const Login = (props) => {
         </Modal>
         <Modal
           dimmer="blurring"
-          trigger={<Button>Login</Button>}
+          trigger={<Button  as='a' primary style={{ marginLeft: '0.5em' }}>Login</Button>}
           basic
           size="small"
         >

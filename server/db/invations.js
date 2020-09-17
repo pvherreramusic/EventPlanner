@@ -31,17 +31,17 @@ async function getInvitationsById({group_id, inviter_id, invitee_id}) {
     }
   }
 
-  async function createInvitations({group_id, inviter_id, invitee_id, status}) {
+  async function createInvitations({group_id, inviter_id, invitee_id}) {
     try {
       const {
         rows: [invitations]
       } = await client.query(
         `
-        INSERT INTO invitations (group_id ,inviter_id, invitee_id, status)
+        INSERT INTO invitations (group_id ,inviter_id, invitee_id)
         VALUES ($1, $2, $3, $4)
         RETURNING *;
         `,
-        [group_id, inviter_id, invitee_id, status]
+        [group_id, inviter_id, invitee_id]
       );
   
       return invitations;

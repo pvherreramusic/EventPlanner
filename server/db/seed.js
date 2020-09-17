@@ -18,21 +18,21 @@ const {
 
 
 
-async function dropType() {
+// async function dropType() {
 
-  try {
-    console.log("Starting to drop types...");
+//   try {
+//     console.log("Starting to drop types...");
 
-    await client.query(`
-  DROP TYPE IF EXISTS s_status cascade;
+//     await client.query(`
+//   DROP TYPE IF EXISTS s_status cascade;
 
-  `);
+//   `);
 
-} catch (error) {
-  console.error(error);
-  throw error;
-}
-}  
+// } catch (error) {
+//   console.error(error);
+//   throw error;
+// }
+// }  
 
 
 async function dropTables() {
@@ -43,9 +43,9 @@ async function dropTables() {
     DROP TABLE IF EXISTS comment ;
   `);
     
-    await client.query(`
-    DROP TABLE IF EXISTS invitations ;
-  `);
+  //   await client.query(`
+  //   DROP TABLE IF EXISTS invitations ;
+  // `);
 
     await client.query(`
   DROP TABLE IF EXISTS user_group;
@@ -73,20 +73,20 @@ async function dropTables() {
   }
 }  
 
-async function createTypes() {
-  try{
-    await client.query(`
-    CREATE TYPE s_status AS ENUM ('pending', 'open', 'accepted', 'rejected');
+// async function createTypes() {
+//   try{
+//     await client.query(`
+//     CREATE TYPE s_status AS ENUM ('pending', 'open', 'accepted', 'rejected');
   
   
   
-  `)
-  console.log("Done making types...");
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-  }  
+//   `)
+//   console.log("Done making types...");
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+//   }  
 
 async function createTables() {
   try {
@@ -141,16 +141,15 @@ CREATE TABLE user_group (
 
       
 
-    await client.query(`
-    CREATE TABLE invitations (
-      "group_id" integer REFERENCES groups(id),
-      "inviter_id" integer REFERENCES users(id),
-      "invitee_id" integer REFERENCES users(id),
-      status s_status default 'pending'
+  //   await client.query(`
+  //   CREATE TABLE invitations (
+  //     "group_id" integer REFERENCES groups(id),
+  //     "inviter_id" integer REFERENCES users(id),
+  //     "invitee_id" integer REFERENCES users(id)
       
-  );
+  // );
   
-    `);
+  //   `);
 
     await client.query(`
     CREATE TABLE comment (
