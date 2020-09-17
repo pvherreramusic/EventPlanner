@@ -36,14 +36,14 @@ const promisifiedVerify = (token) => new Promise(
   }
 );
 
-async function createUser({name, username, password, email}) {
+async function createUser({ name, username, password, email }) {
   const hashedPassword = await promisifiedHash(password);
 
   const {
     rows: [user],
   } = await client.query(
     `
-      INSERT INTO users (name, username, password, email )
+      INSERT INTO users (name, username, password, email)
       VALUES ($1, $2, $3, $4)
       ON CONFLICT (email) DO NOTHING
       RETURNING *;
@@ -65,73 +65,72 @@ async function getAllUsers() {
   const { rows } = await client.query(`
         SELECT *
         FROM users;
-        
         `);
 
   return rows;
 }
 
+async function createDetails({
+  first_name,
+  last_name,
+  full_address,
+  billing_address,
+  phone_number
+}) {
+  try {
+    const {
+      rows: [userDetails],
+    } = await client.query(
+      `
+            INSERT INTO user_details (first_name, last_name, full_address, billing_address, phone_number)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *;
+            `,
+      [first_name, last_name, full_address, billing_address, phone_number]
+    );
 
-
-async function getUserByUserId(id) {
-    try {
-      const {
-        rows
-      } = await client.query(
-        `
-              SELECT name
-              FROM users
-              WHERE id= $1
-  
-  
-              
-          `,
-          [id]
-      );
-  
-      
-  
-      return rows;
-    } catch (error) {
-      throw error;
-    }
+    return userDetails;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
+}
 
+async function getUserInfo() {
+  const { rows } = await client.query(`
+        SELECT id, first_name, last_name, full_address, billing_address, phone_number
+        FROM user_details;
+        `);
 
-  async function getUserByGroupId(id) {
-    try {
-      const {
-        rows
-      } = await client.query(
-        `
-        SELECT
-        users.id,
-        groups.id
-        groups.user_id
-     FROM
-         users
-     INNER JOIN groups ON (users.id = groups.user_id)
-     
-     GROUP BY
-     users.id,
-     groups.id,
-     groups.user_id
-     HAVING
-     users.id= $1
-  
-  
-              
-          `,
-          [id]
-      );
-  
-      
-  
-      return rows;
-    } catch (error) {
-      throw error;
+  return rows;
+}
+
+async function getUserById(userId) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+            SELECT *
+            FROM users
+            WHERE id=$1;
+            `,
+      [userId]
+    );
+
+    if (!user) {
+      throw {
+        name: "UserNotFoundError",
+        description: "Could not find user with that userId",
+      };
     }
+
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
+}
 
 async function updateUser(id, fields = {}) {
   const setString = Object.keys(fields)
@@ -162,7 +161,7 @@ async function updateUser(id, fields = {}) {
   }
 }
 
-
+// eslint-disable-next-line complexity
 async function doesUserExist(username = "", email = "") {
   if (!username && !email) {
     throw new Error("You must provide username or email.");
@@ -224,16 +223,15 @@ const loginWithToken = async (token = "") => {
   return getUserById(id);
 };
 
-
-
-
 module.exports = {
   createUser,
   getAllUsers,
+  createDetails,
+  getUserInfo,
   updateUser,
+  getUserById,
   doesUserExist,
   login,
   loginWithToken,
   promisifiedVerify,
-  getUserByUserId
 };

@@ -2,54 +2,12 @@ const express = require("express");
 const userRouter = express();
 const {
   createUser,
+  getAllUsers,
+  getUserInfo,
   doesUserExist,
   login,
   loginWithToken,
-  getUserByUserId,
-  getAllUsers
-  
 } = require("../db");
-
-userRouter.use((req, res, next) => {
-  console.log("A request is being made to /event");
-  next();
-});
-
-userRouter.get("/:id/username", async(req, res, next) => {
-
-  const {id} = req.params
- 
-  try {
-      const userName = await getUserByUserId(id);
-
-      res.send({
-         userName
-      })
-  } catch (error) {
-    throw error;
-      
-  }
-});
-
-
-userRouter.get("/allusers", async(req, res, next) => {
-
-
-  try {
-      const user = await getAllUsers()
-
-      res.send({
-         user
-      })
-  } catch (error) {
-    throw error;
-      
-  }
-});
-
-
-
-
 
 userRouter.post("/register", async (req, res, next) => {
   const values = {
@@ -186,9 +144,5 @@ userRouter.post("/login", async (req, res, next) => {
     next(error);
   }
 });
-
-
-
-
 
 module.exports = userRouter;
