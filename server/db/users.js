@@ -70,40 +70,6 @@ async function getAllUsers() {
   return rows;
 }
 
-async function createDetails({
-  first_name,
-  last_name,
-  full_address,
-  billing_address,
-  phone_number
-}) {
-  try {
-    const {
-      rows: [userDetails],
-    } = await client.query(
-      `
-            INSERT INTO user_details (first_name, last_name, full_address, billing_address, phone_number)
-            VALUES ($1, $2, $3, $4, $5)
-            RETURNING *;
-            `,
-      [first_name, last_name, full_address, billing_address, phone_number]
-    );
-
-    return userDetails;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
-async function getUserInfo() {
-  const { rows } = await client.query(`
-        SELECT id, first_name, last_name, full_address, billing_address, phone_number
-        FROM user_details;
-        `);
-
-  return rows;
-}
 
 async function getUserById(userId) {
   try {
