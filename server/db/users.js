@@ -192,8 +192,6 @@ const loginWithToken = async (token = "") => {
 module.exports = {
   createUser,
   getAllUsers,
-  createDetails,
-  getUserInfo,
   updateUser,
   getUserById,
   doesUserExist,
