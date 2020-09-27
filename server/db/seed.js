@@ -47,14 +47,16 @@ async function dropTables() {
   //   DROP TABLE IF EXISTS invitations ;
   // `);
 
-    await client.query(`
+
+  await client.query(`
   DROP TABLE IF EXISTS user_group;
 `);
-
 
     await client.query(`
     DROP TABLE IF EXISTS event cascade;
   `);
+
+
 
   await client.query(`
   DROP TABLE IF EXISTS groups cascade;
@@ -107,7 +109,8 @@ async function createTables() {
   CREATE TABLE groups(
     id SERIAL PRIMARY KEY,
     "user_id" integer REFERENCES users(id),
-    group_name varchar(255) NOT NULL
+    group_name varchar(255) NOT NULL UNIQUE,
+    description varchar(500) NOT NULL
 
 
     );
@@ -130,9 +133,8 @@ async function createTables() {
 
 await client.query(`
 CREATE TABLE user_group ( 
-  id SERIAL PRIMARY KEY,
   "user_id" integer References users(id),
-  "group_id" integer References groups(id)
+  "group_id" integer REFERENCES groups(id)
 
 
 );

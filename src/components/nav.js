@@ -33,6 +33,7 @@ const Nav =  (props) => {
         <Dropdown.Menu>
           {[
             {text: "Create New Group", route: "/createnewgroup"},
+            {text: "Explore Groups", route: "/exploregroups"},
             { text: "New Event Form", route: "/neweventform" },
             { text: "Group's Event", route: "/groupevent" },
   

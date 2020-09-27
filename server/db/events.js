@@ -19,7 +19,6 @@ async function getEventByEventId(userId) {
 FROM
     event
 INNER JOIN users ON (event.user_id = users.id)
-
 GROUP BY 
 event.event_id,
 event.title,
@@ -53,7 +52,9 @@ async function getEventByUserId(userId) {
       rows
     } = await client.query(
       `
+      
       SELECT
+      users.id,
       event.event_id,
       event.user_id,
       event.group_id,
@@ -63,14 +64,18 @@ async function getEventByUserId(userId) {
       event.time,
       event.location,
       users.name
-      
+
+ 
       
       
   FROM
       event
  INNER JOIN users ON (event.user_id = users.id)
+
+ 
  
   GROUP BY 
+  users.id,
  event.event_id,
  event.title,
  event.user_id,
@@ -97,6 +102,8 @@ async function getEventByUserId(userId) {
   }
 }
 ///bygroup/
+
+
 async function getEventByGroupId(userid) {
   try {
     const {
@@ -106,34 +113,23 @@ async function getEventByGroupId(userid) {
       SELECT
       event.event_id,
       event.user_id,
-      event.group_id,
-      event.title,
-      event.description,
-      event.date,
-      event.time,
-      event.location,
-      users.name
-      
-      
-      
-  FROM
-      event
- INNER JOIN users ON (event.user_id = users.id)
+       event.title
+    FROM
+        user_group
+    INNER JOIN event ON (event.event_id = event.event_id)
+    
  
-  GROUP BY 
- event.event_id,
- event.title,
- event.user_id,
-      event.description,
-      event.date,
-      event.time,
-      event.location,
-      users.name,
-      event.group_id
+ 
+    GROUP BY
+    event.event_id,
+   event.user_id,
+       event.title
+       
+       HAVING event.user_id = $1
+      
+    
       
       
-  HAVING
-  event.event_id = $1
 
             
         `,

@@ -1,28 +1,39 @@
 const { client } = require("./client");
 
 
-async function getUserGroupById({user_id, group_id}) {
+async function getUserGroupById(userid) {
     try {
       const {
-        rows: [user_group],
+        rows
       } = await client.query(
         `
-              SELECT *
-              FROM user_group
+        SELECT
+      groups.group_name,
+        groups.id,
+        groups.user_id,
+        user_group.group_id,
+        user_group.user_id
+     FROM
+         user_group
+     INNER JOIN groups ON (groups.id = user_group.group_id)
+    
+     GROUP BY
+     groups.group_name,
+        groups.id,
+        groups.user_id,
+        user_group.group_id,
+        user_group.user_id
+        
+        HAVING 
+        user_group.user_id = $1
 
 
               `,
-        [user_id, group_id]
+        [userid]
       );
+
   
-      if (!user_group) {
-        throw {
-          name: "UserNotFoundError",
-          description: "Could not find user with that userId",
-        };
-      }
-  
-      return user_group;
+      return rows;
     } catch (error) {
       console.error(error);
       throw error;
@@ -32,7 +43,7 @@ async function getUserGroupById({user_id, group_id}) {
   async function createUG({group_id, user_id}) {
     try {
       const {
-        rows: [user_group]
+        rows 
       } = await client.query(
         `
         INSERT INTO user_group (group_id ,user_id)
@@ -42,7 +53,7 @@ async function getUserGroupById({user_id, group_id}) {
         [group_id, user_id]
       );
   
-      return user_group;
+      return rows;
     } catch (error) {
       console.log(error);
       throw error;
@@ -78,18 +89,11 @@ async function getUserGroupById({user_id, group_id}) {
     }
   }
 
-  async function getAllUserGroup() {
-    const { rows } = await client.query(`
-          SELECT *
-          FROM user_group;
-          `);
-  
-    return rows;
-  }
+
 
   module.exports = {
   getUserGroupById,
   createUG,
-  updateUserGroup,
-  getAllUserGroup,
+  updateUserGroup
+  
     };

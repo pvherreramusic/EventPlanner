@@ -1,16 +1,16 @@
 const { client } = require("./client");
 
-async function createGroup({group_name, user_id}) {
+async function createGroup({group_name, user_id, description}) {
   try {
     const {
       rows: [group]
     } = await client.query(
       `
-      INSERT INTO groups (group_name ,user_id)
-      VALUES ($1, $2)
+      INSERT INTO groups (group_name ,user_id ,description)
+      VALUES ($1, $2, $3)
       RETURNING *;
       `,
-      [group_name, user_id]
+      [group_name, user_id, description]
     );
 
     return group;
@@ -20,6 +20,7 @@ async function createGroup({group_name, user_id}) {
   }
 }
 
+
 async function getAllGroup() {
   const { rows } = await client.query(`
   SELECT *
@@ -27,6 +28,38 @@ async function getAllGroup() {
   `);
   return rows;
 }
+
+////api/groups/selectedgroup/${groupid}`
+async function getSelectedGroup(groupid) {
+  try {
+    const {
+      rows
+    } = await client.query(
+      `
+      SELECT
+      groups.id, groups.group_name, groups.description
+            
+            
+        FROM
+           groups
+       
+        GROUP BY 
+        groups.id, groups.group_name, groups.description
+      
+      HAVING 
+      groups.id = $1
+    `,
+      [groupid]
+    );
+
+    return rows;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+
 
 
 
@@ -65,19 +98,19 @@ async function getGroupById(userid) {
     } = await client.query(
       `
       SELECT
-      groups.group_name,
-        groups.id,
-        groups.user_id
-     FROM
-         groups
-     INNER JOIN users ON (groups.user_id = users.id)
-     
-     GROUP BY
-        users.id,
-        groups.id,
-        groups.user_id
-     HAVING
-     users.id = $1
+    
+      groups.user_id,
+      groups.group_name
+   FROM
+       groups
+   
+   
+   GROUP BY
+      groups.user_id,
+      groups.group_name
+      
+      HAVING  groups.user_id = $1
+    
     `,
       [userid]
     );
@@ -94,5 +127,7 @@ module.exports = {
 getAllGroup,
 getGroupById,
 createGroup,
-updateGroup
+updateGroup,
+getSelectedGroup
 };
+

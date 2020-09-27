@@ -6,7 +6,10 @@ import { Button, Form, Header, } from "semantic-ui-react";
 
 const CreateGroup = () => {
   const initialFormData = {
-   group_name: ""
+   group_name: "",
+   description: "",
+   
+
    
 
   };
@@ -68,7 +71,14 @@ const CreateGroup = () => {
                   name="group_name"
                   onChange={handleChange}
                 />
+                 <Form.TextArea
+                  label="Description"
+                  name="description"
+                  onChange={handleChange}
+                />
                
+
+
             
               </Form.Group>
               <Button onClick={handleSubmit}>Create Group</Button>

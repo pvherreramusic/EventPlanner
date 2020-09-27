@@ -1,8 +1,12 @@
+
 import React, { useState, useEffect } from "react";
 import { Example, CommentForm, Comments} from "./index";
 
 
+
+
 const SelectGroups = ({ userid }) => {
+
   const [items, setItems] = useState([]);
   const [successForm, setSuccess] = useState(false);
   const [value, setValue] = useState();
@@ -10,6 +14,7 @@ const SelectGroups = ({ userid }) => {
 
 
 
+console.log(value)
   useEffect(() => {
     async function getEvents() {
       const response = await fetch(
@@ -17,17 +22,20 @@ const SelectGroups = ({ userid }) => {
       );
       const body = await response.json();
       setGroupEvents(
-        body.evnt.map(({ title, id }) => ({ label: title, value: id }))
+        body.evnt.map(({ title, event_id }) => ({ label: title, value: event_id, }))
       );
     }
 
     getEvents();
   }, [value]); 
 
+
+
+
   const handleEventChange = (e) => {
-    if (e.target.value !== "YourEvents") {
+    if (e.target.value !== "TheEvents") {
         setSuccess(!successForm);
-      setGroupEvents(
+        setGroupEvents(
          e.target.value,
       );
     }
@@ -37,13 +45,13 @@ const SelectGroups = ({ userid }) => {
   useEffect(() => {
     async function getCharacters() {
       const response = await fetch(
-        `/api/groups/${userid}/group`
+        `/api/groups/${userid}/usergroup`
       );
       const body = await response.json();
       setItems(
-        body.group.map(({ group_name, id }) => ({
+        body.group.map(({ group_name, id  }) => ({
           label: group_name,
-          value: id,
+          value: id ,
         }))
       );
     }
@@ -70,10 +78,11 @@ console.log(value)
         <>
         <div>
 
-    
-<Example userid ={userid}></Example>
-<CommentForm userid={value}></CommentForm>
-<Comments userid={value}></Comments>
+  
+<Example userid ={groupEvents}></Example>
+<CommentForm userid={groupEvents}></CommentForm>
+<Comments userid={groupEvents}></Comments>
+
       
 
 
@@ -89,7 +98,7 @@ console.log(value)
     
     onChange={handleEventChange}
   >
-    <option value="YourEvent">Your Events:</option>
+    <option value="TheEvents">The Events:</option>
     {groupEvents.map(({ label, value }) => (
       <option key={value} value={value}>
         {label}

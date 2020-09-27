@@ -30,6 +30,7 @@ const App = () => {
         <Route path="/groupevent" exact render={() => <MainPage userid={user.id} />}/>
         <Route path= "/neweventform" exact render={() => <FormForNewEvent userid={user.id} />}/>
         <Route path= "/createnewgroup" exact component={CreateGroup}/>
+        <Route path= "/exploregroups" exact component={GroupPage}/>
 
 
          

@@ -18,7 +18,7 @@ const Comments = ({userid}) => {
       {comments.map((item) => (
         <ul>
           <h3>
-            {item.message} BY {item.name} FOR {item.title}
+            {item.message} BY {item.name}
           </h3>
         </ul>
       ))}

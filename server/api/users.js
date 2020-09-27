@@ -2,11 +2,10 @@ const express = require("express");
 const userRouter = express();
 const {
   createUser,
-  getAllUsers,
-  getUserInfo,
   doesUserExist,
   login,
   loginWithToken,
+  getUserByUsername
 } = require("../db");
 
 userRouter.post("/register", async (req, res, next) => {
@@ -142,6 +141,18 @@ userRouter.post("/login", async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+});
+
+userRouter.get('/allusers', async(req, res, next) => {
+  try {
+      const username = await getUserByUsername();
+
+      res.send({
+         username
+      })
+  } catch (error) {
+      next(error);
   }
 });
 
