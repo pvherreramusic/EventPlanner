@@ -100,6 +100,44 @@ async function getUserById(userId) {
   }
 }
 
+async function getUserByUsername() {
+  try {
+    const {
+      rows,
+    } = await client.query(
+      `
+      SELECT
+      users.id,
+   users.username  
+      
+      
+      
+  FROM
+     users
+ 
+  GROUP BY 
+  users.id,
+users.username 
+
+
+            `,
+      []
+    );
+
+    if (!rows) {
+      throw {
+        name: "UserNotFoundError",
+        description: "Could not find user with that userId",
+      };
+    }
+
+    return rows;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 async function updateUser(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -200,4 +238,5 @@ module.exports = {
   login,
   loginWithToken,
   promisifiedVerify,
+  getUserByUsername
 };

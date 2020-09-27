@@ -84092,6 +84092,17 @@ const CommentForm = ({
 
 /***/ }),
 
+/***/ "./src/components/edit.js":
+/*!********************************!*\
+  !*** ./src/components/edit.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Users/patrick-vincentherrera/curriculum/EventPlanner/src/components/edit.js'");
+
+/***/ }),
+
 /***/ "./src/components/groupeventpage.js":
 /*!******************************************!*\
   !*** ./src/components/groupeventpage.js ***!
@@ -84101,21 +84112,123 @@ const CommentForm = ({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GroupPage; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./src/components/index.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+const SelectGroups = () => {
+  const initialFormData = {
+    group_id: ""
+  };
+  const [items, setItems] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  const [value, setValue] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
+  const [formData, setFormData] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialFormData);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    async function getCharacters() {
+      const response = await fetch(`/api/groups/allgroups`);
+      const body = await response.json();
+      setItems(body.groups.map(({
+        group_name,
+        id
+      }) => ({
+        label: group_name,
+        value: id
+      })));
+    }
+
+    getCharacters();
+  }, []);
+
+  const handleChange = e => {
+    if (e.target.value !== "YourGroups") {
+      setValue(e.target.value);
+      setFormData({ ...formData,
+        [e.target.name]: e.target.value
+      });
+    }
+
+    ;
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(formData);
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("api/groups/usergroup", formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    }).then(() => {}).catch(error => {
+      alert(error.message);
+    });
+  };
+
+  console.log(value);
+
+  if (value) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Form"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["GroupPageEx"], {
+      groupid: value
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+      onClick: handleSubmit
+    }, "JOIN GROUP"));
+  } else {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Select your group to see group event page"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+      multiple: false,
+      name: "group_id",
+      value: value,
+      onChange: handleChange
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      value: "The Groups"
+    }, "The Groups:"), items.map(({
+      label,
+      value
+    }) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: value,
+      value: value
+    }, label))));
+  }
+
+  ;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SelectGroups);
+
+/***/ }),
+
+/***/ "./src/components/grouppageEx.js":
+/*!***************************************!*\
+  !*** ./src/components/grouppageEx.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./src/components/index.js");
 
 
-function GroupPage({
-  userid
-}) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["CommentForm"], {
-    userid: userid
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["Comments"], {
-    userid: userid
-  }));
-}
+
+const GroupPageEx = ({
+  groupid
+}) => {
+  const [posts, setPosts] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    fetch(`/api/groups/selectedgroup/${groupid}`).then(response => response.json()).then(data => {
+      setPosts(data.selected);
+    });
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, posts.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "GROUP NAME: ", item.group_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "DESCRIPTION:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, item.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["SendInvite"], null));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (GroupPageEx);
 
 /***/ }),
 
@@ -84139,7 +84252,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const CreateGroup = () => {
   const initialFormData = {
-    group_name: ""
+    group_name: "",
+    description: ""
   };
   const [formData, setFormData] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialFormData);
   const [successForm, setSuccess] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
@@ -84176,6 +84290,10 @@ const CreateGroup = () => {
     label: "Group Name",
     name: "group_name",
     onChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Form"].TextArea, {
+    label: "Description",
+    name: "description",
+    onChange: handleChange
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
     onClick: handleSubmit
   }, "Create Group")))));
@@ -84207,7 +84325,7 @@ const HomePage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a
   }
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Header"], {
   as: "h1"
-}, "EVENT PLANNNER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "THANK YOU FOR USING THIS APP TO PLAN A EVENT WITH YOUR GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "LETS PARTY!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "HOW TO USE THE APP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "GO TO CREATE GROUP FIRST AFTER YOU SIGN IN OR REGISTER "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " THEN AFTER, CREATE A EVENT"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "THEN, GO TO YOUR GROUP PAGE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Image"], {
+}, "EVENT PLANNNER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "THANK YOU FOR USING THIS APP TO PLAN A EVENT WITH YOUR GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "LETS PARTY!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "HOW TO USE THE APP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP ONE: SIGN UP or LOG IN"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP TWO MAKE A GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP THREE GO TO EXPLORE GROUPS AND JOIN YOUR SELECTED GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP FOUR MAKE AN EVENT"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP FIVE CHECK OUT YOUR EVENT and TELL OTHERS TO JOIN GROUPS and CHECK OUT THE EVENTS. YOU CAN COMMENT AND TALK TO EACH OTHER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Image"], {
   src: "https://media.timeout.com/images/105347841/630/472/image.jpg",
   style: {
     marginTop: '2em'
@@ -84222,7 +84340,7 @@ const HomePage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a
 /*!*********************************!*\
   !*** ./src/components/index.js ***!
   \*********************************/
-/*! exports provided: CommentForm, GroupPage, CreateGroup, HomePage, MainPage, Comments, Nav, Login, FormForNewEvent, SelectGroups, Example */
+/*! exports provided: CommentForm, GroupPage, CreateGroup, HomePage, MainPage, Comments, Nav, Login, FormForNewEvent, SelectGroups, Example, GroupPageEx, SendInvite, Edit */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84260,6 +84378,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _userevent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./userevent */ "./src/components/userevent.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Example", function() { return _userevent__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
+/* harmony import */ var _grouppageEx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./grouppageEx */ "./src/components/grouppageEx.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GroupPageEx", function() { return _grouppageEx__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+
+/* harmony import */ var _invite__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./invite */ "./src/components/invite.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SendInvite", function() { return _invite__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./edit */ "./src/components/edit.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Edit", function() { return _edit__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
 
 
@@ -84271,6 +84397,156 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+/***/ }),
+
+/***/ "./src/components/invite.js":
+/*!**********************************!*\
+  !*** ./src/components/invite.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+class SendInvite extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+  constructor(props) {
+    super(props);
+    this.state = {
+      yourname: '',
+      personname: '',
+      email: '',
+      subject: '',
+      message: '',
+      group: ''
+    };
+  }
+
+  onYourNameChange(event) {
+    this.setState({
+      yourname: event.target.value
+    });
+  }
+
+  onPersonNameChange(event) {
+    this.setState({
+      personname: event.target.value
+    });
+  }
+
+  onEmailChange(event) {
+    this.setState({
+      email: event.target.value
+    });
+  }
+
+  onSubjectChange(event) {
+    this.setState({
+      subject: event.target.value
+    });
+  }
+
+  onMsgChange(event) {
+    this.setState({
+      message: event.target.value
+    });
+  }
+
+  onGroupChange(event) {
+    this.setState({
+      group: event.target.value
+    });
+  }
+
+  submitEmail(event) {
+    event.preventDefault();
+    axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "POST",
+      url: "/sendemail",
+      data: this.state
+    }).then(response => {
+      if (response.data.status === 'success') {
+        this.resetForm();
+      } else if (response.data.status === 'fail') {}
+    });
+  }
+
+  resetForm() {
+    this.setState({
+      yourname: '',
+      personname: '',
+      email: '',
+      subject: '',
+      message: '',
+      group: ''
+    });
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " Send a invite about this group"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      onSubmit: this.submitEmail.bind(this),
+      method: "POST"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      placeholder: "Type in your Name",
+      id: "yourname",
+      type: "text",
+      required: true,
+      value: this.state.yourname,
+      onChange: this.onYourNameChange.bind(this)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      placeholder: "Type the person's Name",
+      id: "personname",
+      type: "text",
+      required: true,
+      value: this.state.personname,
+      onChange: this.onPersonNameChange.bind(this)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      placeholder: "Type their Email",
+      id: "email",
+      type: "email",
+      required: true,
+      value: this.state.email,
+      onChange: this.onEmailChange.bind(this)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      placeholder: "Subject",
+      id: "subject",
+      type: "subject",
+      required: true,
+      value: this.state.subject,
+      onChange: this.onSubjectChange.bind(this)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+      placeholder: "Message",
+      id: "message",
+      type: "message",
+      required: true,
+      value: this.state.message,
+      onChange: this.onMsgChange.bind(this)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      placeholder: "Type in the group name",
+      id: "group",
+      type: "group",
+      required: true,
+      value: this.state.group,
+      onChange: this.onGroupChange.bind(this)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      type: "submit"
+    }, "submit your message"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "*Please click once on the submit button, otherwise your friends will get more emails than should! ")));
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (SendInvite);
 
 /***/ }),
 
@@ -84470,7 +84746,7 @@ const Comments = ({
       setComments(data.eventComment);
     });
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "ALL COMMENTS FROM EVENTS"), comments.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, item.message, " BY ", item.name, " FOR ", item.title))));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "ALL COMMENTS FROM EVENTS"), comments.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, item.message, " BY ", item.name))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Comments);
@@ -84523,6 +84799,9 @@ const Nav = props => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Dropdown"].Menu, null, [{
     text: "Create New Group",
     route: "/createnewgroup"
+  }, {
+    text: "Explore Groups",
+    route: "/exploregroups"
   }, {
     text: "New Event Form",
     route: "/neweventform"
@@ -84580,14 +84859,14 @@ const FormForNewEvent = ({
   const [value, setValue] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     async function getCharacters() {
-      const response = await fetch(`/api/groups/${userid}/group`);
+      const response = await fetch(`/api/groups/${userid}/usergroup`);
       const body = await response.json();
       setItems(body.group.map(({
         group_name,
-        id
+        group_id
       }) => ({
         label: group_name,
-        value: id
+        value: group_id
       })));
     }
 
@@ -84630,7 +84909,7 @@ const FormForNewEvent = ({
     label: "Title",
     name: "title",
     onChange: handleChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Form"].Input, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Form"].TextArea, {
     label: "description",
     name: "description",
     onChange: handleChange
@@ -84693,16 +84972,17 @@ const SelectGroups = ({
   const [successForm, setSuccess] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
   const [value, setValue] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
   const [groupEvents, setGroupEvents] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  console.log(value);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     async function getEvents() {
       const response = await fetch(`/api/events/bygroup/${value}`);
       const body = await response.json();
       setGroupEvents(body.evnt.map(({
         title,
-        id
+        event_id
       }) => ({
         label: title,
-        value: id
+        value: event_id
       })));
     }
 
@@ -84710,7 +84990,7 @@ const SelectGroups = ({
   }, [value]);
 
   const handleEventChange = e => {
-    if (e.target.value !== "YourEvents") {
+    if (e.target.value !== "TheEvents") {
       setSuccess(!successForm);
       setGroupEvents(e.target.value);
     }
@@ -84718,7 +84998,7 @@ const SelectGroups = ({
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     async function getCharacters() {
-      const response = await fetch(`/api/groups/${userid}/group`);
+      const response = await fetch(`/api/groups/${userid}/usergroup`);
       const body = await response.json();
       setItems(body.group.map(({
         group_name,
@@ -84744,17 +85024,17 @@ const SelectGroups = ({
 
   if (value) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, successForm ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["Example"], {
-      userid: userid
+      userid: groupEvents
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["CommentForm"], {
-      userid: value
+      userid: groupEvents
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["Comments"], {
-      userid: value
+      userid: groupEvents
     }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
       multiple: false,
       onChange: handleEventChange
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      value: "YourEvent"
-    }, "Your Events:"), groupEvents.map(({
+      value: "TheEvents"
+    }, "The Events:"), groupEvents.map(({
       label,
       value
     }) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
@@ -84875,6 +85155,10 @@ const App = () => {
     path: "/createnewgroup",
     exact: true,
     component: _components__WEBPACK_IMPORTED_MODULE_4__["CreateGroup"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Route"], {
+    path: "/exploregroups",
+    exact: true,
+    component: _components__WEBPACK_IMPORTED_MODULE_4__["GroupPage"]
   }));
 };
 

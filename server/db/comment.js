@@ -17,15 +17,16 @@ async function getCommentsById(userId) {
     } = await client.query(
       `
       SELECT
-      comment.id
+      comment.id,
       comment.message,
       comment.user_id,
       comment.event_id,
       users.name
       FROM comment
-      INNER JOIN event ON (comment.event_id = event.id)
+      INNER JOIN event ON (comment.event_id = event.event_id)
       INNER JOIN users ON (comment.user_id = users.id)
       GROUP BY
+      comment.id,
       comment.message,
       comment.user_id,
       comment.event_id,
@@ -59,20 +60,18 @@ async function getCommentEventId(userId) {
       comment.message,
       comment.user_id,
       comment.event_id,
-      users.name,
-      event.title
+      users.name
       FROM comment
-      INNER JOIN users ON (comment.id = users.id)
       INNER JOIN event ON (comment.event_id = event.event_id)
+      INNER JOIN users ON (comment.user_id = users.id)
       GROUP BY
+      comment.id,
       comment.message,
       comment.user_id,
       comment.event_id,
-      users.name,
-      event.title,
-      comment.id
+      users.name
       HAVING
-     comment.user_id= $1
+      comment.event_id = $1
 
 
             

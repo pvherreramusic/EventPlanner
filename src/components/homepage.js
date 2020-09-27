@@ -17,9 +17,11 @@ const HomePage = () => (
        LETS PARTY!
       </p>
       <h2>HOW TO USE THE APP</h2>
-      <p>GO TO CREATE GROUP FIRST AFTER YOU SIGN IN OR REGISTER </p>
-      <p> THEN AFTER, CREATE A EVENT</p>
-      <p>THEN, GO TO YOUR GROUP PAGE</p>
+    <p>STEP ONE: SIGN UP or LOG IN</p>
+    <p>STEP TWO MAKE A GROUP</p>
+    <p>STEP THREE GO TO EXPLORE GROUPS AND JOIN YOUR SELECTED GROUP</p>
+    <p>STEP FOUR MAKE AN EVENT</p>
+    <p>STEP FIVE CHECK OUT YOUR EVENT and TELL OTHERS TO JOIN GROUPS and CHECK OUT THE EVENTS. YOU CAN COMMENT AND TALK TO EACH OTHER</p>
 
       <Image src='https://media.timeout.com/images/105347841/630/472/image.jpg' style={{ marginTop: '2em' }} />
 

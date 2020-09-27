@@ -24,9 +24,9 @@ const FormForNewEvent = ({ userid }) => {
 
   useEffect(() => {
     async function getCharacters() {
-      const response = await fetch(`/api/groups/${ userid }/group`);
+      const response = await fetch(`/api/groups/${userid}/usergroup`);
       const body = await response.json();
-      setItems(body.group.map(({ group_name , id},) => ({ label: group_name, value: id })));
+      setItems(body.group.map(({ group_name , group_id},) => ({ label: group_name, value: group_id })));
     }
     getCharacters();
   }, []);
@@ -93,7 +93,7 @@ const FormForNewEvent = ({ userid }) => {
                   name="title"
                   onChange={handleChange}
                 />
-                <Form.Input
+                <Form.TextArea
                   label="description"
                   name="description"
                   onChange={handleChange}
