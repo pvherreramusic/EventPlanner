@@ -46,7 +46,7 @@ return rows;
 }
 
 ///http://localhost:3001/api/events/event/
-async function getEventByUserId(userId) {
+async function getEventByUserId(eventid) {
   try {
     const {
       rows
@@ -91,7 +91,7 @@ async function getEventByUserId(userId) {
   event.event_id = $1
             
         `,
-        [userId]
+        [eventid]
     );
 
     
@@ -113,6 +113,7 @@ async function getEventByGroupId(userid) {
       SELECT
       event.event_id,
       event.user_id,
+      event.group_id,
        event.title
     FROM
         user_group
@@ -122,10 +123,12 @@ async function getEventByGroupId(userid) {
  
     GROUP BY
     event.event_id,
-   event.user_id,
+      event.user_id,
+      event.group_id,
        event.title
        
-       HAVING event.user_id = $1
+       HAVING event.group_id = $1
+       
       
     
       

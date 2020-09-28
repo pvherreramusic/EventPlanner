@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 
-const Example = ({ userid }) => {
+const Example = ({ eventid }) => {
   const [posts, setPosts] = useState([]);
 
 
   useEffect(() => {
-    fetch(`/api/events/event/${userid}`)
+    fetch(`/api/events/event/${eventid}`)
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.userEvent);
@@ -26,6 +26,9 @@ const Example = ({ userid }) => {
           <h3>
             {item.time} , {item.date}
           </h3>
+          <br></br>
+          <br></br>
+          <h3>DESCRIPTION ABOUT THE EVENT: {item.description}</h3>
 
           <h1> BY {item.name}</h1>
         </ul>

@@ -79,7 +79,7 @@ console.log(value)
         <div>
 
   
-<Example userid ={groupEvents}></Example>
+<Example eventid ={groupEvents}></Example>
 <CommentForm userid={groupEvents}></CommentForm>
 <Comments userid={groupEvents}></Comments>
 

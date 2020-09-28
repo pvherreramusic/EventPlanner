@@ -84,7 +84,7 @@ const FormForNewEvent = ({ userid }) => {
 
           <Header as="h1" textAlign="center">
               EVENT FORM 
-              
+              <br></br>
             Enter correct fields
             <Form>
               <Form.Group unstackable widths={2}>
@@ -115,7 +115,8 @@ const FormForNewEvent = ({ userid }) => {
                   name="location"
                   onChange={handleChange}
                 />
-                
+                <br></br>
+                <h2>WHICH GROUP YOU ARE IN DO YOU WANT THIS EVENT TO GO TO?</h2>
                 <select 
                 multiple={false}
 label="GROUP"

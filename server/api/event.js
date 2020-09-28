@@ -36,11 +36,12 @@ eventRouter.get('/allevents', async(req, res, next) => {
 });
 
 
-eventRouter.get("/event/:userId", async (req, res, next) => {
-  const {userId}  = req.params
+eventRouter.get("/event/:eventid", async (req, res, next) => {
+  
+  const {eventid} = req.params
 
   try {
-    const userEvent = await getEventByUserId(userId);
+    const userEvent = await getEventByUserId(eventid);
 
     if (!userEvent) {
       return res.status(404).json({

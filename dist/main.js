@@ -84092,17 +84092,6 @@ const CommentForm = ({
 
 /***/ }),
 
-/***/ "./src/components/edit.js":
-/*!********************************!*\
-  !*** ./src/components/edit.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Users/patrick-vincentherrera/curriculum/EventPlanner/src/components/edit.js'");
-
-/***/ }),
-
 /***/ "./src/components/groupeventpage.js":
 /*!******************************************!*\
   !*** ./src/components/groupeventpage.js ***!
@@ -84325,7 +84314,7 @@ const HomePage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a
   }
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Header"], {
   as: "h1"
-}, "EVENT PLANNNER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "THANK YOU FOR USING THIS APP TO PLAN A EVENT WITH YOUR GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "LETS PARTY!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "HOW TO USE THE APP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP ONE: SIGN UP or LOG IN"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP TWO MAKE A GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP THREE GO TO EXPLORE GROUPS AND JOIN YOUR SELECTED GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP FOUR MAKE AN EVENT"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP FIVE CHECK OUT YOUR EVENT and TELL OTHERS TO JOIN GROUPS and CHECK OUT THE EVENTS. YOU CAN COMMENT AND TALK TO EACH OTHER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Image"], {
+}, "EVENT PLANNNER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "THANK YOU FOR USING THIS APP TO PLAN A EVENT WITH YOUR GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "LETS PARTY!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "HOW TO USE THE APP IF YOU ARE NEW"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP ONE: SIGN UP or LOG IN"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP TWO MAKE A GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP THREE GO TO EXPLORE GROUPS AND JOIN YOUR SELECTED GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP FOUR MAKE AN EVENT"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP FIVE CHECK OUT YOUR EVENT and TELL OTHERS TO JOIN GROUPS and CHECK OUT THE EVENTS. YOU CAN COMMENT AND TALK TO EACH OTHER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "FOR THOSE WHO ARE NOT NEW"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "CHECK OUT NEW GROUPS AND JOIN GROUPS AND CHECK OUT THEIR EVENTS BY DIFFERENT USERS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Image"], {
   src: "https://media.timeout.com/images/105347841/630/472/image.jpg",
   style: {
     marginTop: '2em'
@@ -84340,7 +84329,7 @@ const HomePage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a
 /*!*********************************!*\
   !*** ./src/components/index.js ***!
   \*********************************/
-/*! exports provided: CommentForm, GroupPage, CreateGroup, HomePage, MainPage, Comments, Nav, Login, FormForNewEvent, SelectGroups, Example, GroupPageEx, SendInvite, Edit */
+/*! exports provided: CommentForm, GroupPage, CreateGroup, HomePage, MainPage, Comments, Nav, Login, FormForNewEvent, SelectGroups, Example, GroupPageEx, SendInvite */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84383,10 +84372,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _invite__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./invite */ "./src/components/invite.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SendInvite", function() { return _invite__WEBPACK_IMPORTED_MODULE_12__["default"]; });
-
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./edit */ "./src/components/edit.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Edit", function() { return _edit__WEBPACK_IMPORTED_MODULE_13__["default"]; });
-
 
 
 
@@ -84902,7 +84887,7 @@ const FormForNewEvent = ({
   }, "Your Details are Complete. Go Check Out Your Event in the Groups Page.")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"], {
     as: "h1",
     textAlign: "center"
-  }, "EVENT FORM Enter correct fields", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Form"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Form"].Group, {
+  }, "EVENT FORM", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Enter correct fields", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Form"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Form"].Group, {
     unstackable: true,
     widths: 2
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Form"].Input, {
@@ -84927,7 +84912,7 @@ const FormForNewEvent = ({
     label: "Location",
     name: "location",
     onChange: handleChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "WHICH GROUP YOU ARE IN DO YOU WANT THIS EVENT TO GO TO?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
     multiple: false,
     label: "GROUP",
     name: "group_id",
@@ -85024,7 +85009,7 @@ const SelectGroups = ({
 
   if (value) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, successForm ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["Example"], {
-      userid: groupEvents
+      eventid: groupEvents
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["CommentForm"], {
       userid: groupEvents
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["Comments"], {
@@ -85077,15 +85062,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Example = ({
-  userid
+  eventid
 }) => {
   const [posts, setPosts] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    fetch(`/api/events/event/${userid}`).then(response => response.json()).then(data => {
+    fetch(`/api/events/event/${eventid}`).then(response => response.json()).then(data => {
       setPosts(data.userEvent);
     });
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, posts.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, item.title), "in", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, item.location), "at", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, item.time, " , ", item.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, " BY ", item.name))));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, posts.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, item.title), "in", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, item.location), "at", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, item.time, " , ", item.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "DESCRIPTION ABOUT THE EVENT: ", item.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, " BY ", item.name))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Example);
