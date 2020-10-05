@@ -8,49 +8,40 @@ const {
   getEventById,
   getAllEvents,
   getEventByGroupId,
-  
-  
-  
-} = require('../db');
-
-
-
+  getAllUsers,
+} = require("../db");
 
 eventRouter.use((req, res, next) => {
   console.log("A request is being made to /event");
   next();
 });
 
-
-
-eventRouter.get('/allevents', async(req, res, next) => {
+eventRouter.get("/allevents", async (req, res, next) => {
   try {
-      const events = await getAllEvents();
+    const events = await getAllEvents();
 
-      res.send({
-         events
-      })
+    res.send({
+      events,
+    });
   } catch (error) {
-      next(error);
+    next(error);
   }
 });
 
-
 eventRouter.get("/event/:eventid", async (req, res, next) => {
-  
-  const {eventid} = req.params
+  const { eventid } = req.params;
 
   try {
     const userEvent = await getEventByUserId(eventid);
 
     if (!userEvent) {
       return res.status(404).json({
-        error: `No user found with Id: ${userId}`
+        error: `No user found with Id: ${userId}`,
       });
     }
 
     res.send({
-      userEvent
+      userEvent,
     });
   } catch (error) {
     next(error);
@@ -60,110 +51,80 @@ eventRouter.get("/event/:eventid", async (req, res, next) => {
 // eventRouter.get('/:eventId/anevent', async(req, res, next) => {
 
 //   const { eventId } = req.params;
-  
- 
+
 //   try {
-    
+
 //     const anEvent = await getEventByEventId(eventId)
-    
+
 //     res.send(anEvent);
 //   } catch (error) {
 //     next(error);
 //   }
 // });
 
-eventRouter.get('/bygroup/:groupid',async(req, res, next) => {
-
+eventRouter.get("/bygroup/:groupid", async (req, res, next) => {
   const { groupid } = req.params;
-  
- 
+
   try {
-    
     const evnt = await getEventByGroupId(groupid);
-    
+
     if (!evnt) {
       return res.status(404).json({
-        error: `No user found with Id: ${groupid}`
+        error: `No user found with Id: ${groupid}`,
       });
     }
 
     res.send({
-      evnt
+      evnt,
     });
   } catch (error) {
     next(error);
   }
 });
 
+eventRouter.put("/event/:eventid", verifyToken, async (req, res, next) => {
+  const { eventid } = req.params;
+  const { user_id, event_id, title, description } = req.body;
+  const updateFields = {};
+  const { id } = req.id;
 
-eventRouter.put("/event/:eventid", async (req, res, next) => {
+  if (user_id) {
+    updateFields.user_id = user_id;
+  }
 
+  if (event_id) {
+    updateFields.event_id = event_id;
+  }
 
-const {eventid} = req.params;
-const {event_id, title, description} = req.body;
-const updateFields = {};
-
-console.log('Entered /links/:id PATCH. id: ', eventid, 'req.body: ', req.body);
-
-if(event_id){
-updateFields.event_id = event_id;
-
-}
-
-if (title){
+  if (title) {
     updateFields.title = title;
-}
-if (description) {
+  }
+  if (description) {
     updateFields.description = description;
-}
+  }
 
+  console.log(user_id);
 
-console.log('Update fields lenght: ', updateFields);
+  console.log("Update fields lenght: ", updateFields);
 
-
-try {
-    const updatedEVE = await updateEvent(eventid, updateFields);
-    console.log('Edited link: ', updatedEVE);
-    res.send({
-        message: 'Event updated',
+  if (id == user_id) {
+    try {
+      const updatedEVE = await updateEvent(eventid, updateFields);
+      console.log("Edited link: ", updatedEVE);
+      res.send({
+        message: "Event updated",
         data: updatedEVE,
         status: true,
-    });
-} catch (error) {
-    next(error);
-}
-})
-
-// const {eventid} = req.params
-
-//     try{
-//         const updatedEve =  updateEvent(eventid)
-//         if (updatedEve){
-//             res.send(updatedEve)
-//         }
-//     }catch(error){
-//         throw error}
-// }
-// );
-
-
-
-
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+});
 
 eventRouter.post("/newevent", verifyToken, async (req, res, next) => {
-
   try {
-    const {
-      title,
-      description,
-      date,
-      time,
-      location,
-      group_id,
-      
-      
-      
-    } = req.body;
+    const { title, description, date, time, location, group_id } = req.body;
 
     const eventInfo = {
       user_id: req.id.id,

@@ -13,10 +13,8 @@ const {
   getAllInvitations,
   createInvitations,
   getAllComments,
-  createComment
+  createComment,
 } = require("./index");
-
-
 
 // async function dropType() {
 
@@ -32,8 +30,7 @@ const {
 //   console.error(error);
 //   throw error;
 // }
-// }  
-
+// }
 
 async function dropTables() {
   try {
@@ -42,13 +39,12 @@ async function dropTables() {
     await client.query(`
     DROP TABLE IF EXISTS comment ;
   `);
-    
-  //   await client.query(`
-  //   DROP TABLE IF EXISTS invitations ;
-  // `);
 
+    //   await client.query(`
+    //   DROP TABLE IF EXISTS invitations ;
+    // `);
 
-  await client.query(`
+    await client.query(`
   DROP TABLE IF EXISTS user_group;
 `);
 
@@ -56,39 +52,33 @@ async function dropTables() {
     DROP TABLE IF EXISTS event cascade;
   `);
 
-
-
-  await client.query(`
+    await client.query(`
   DROP TABLE IF EXISTS groups cascade;
 `);
 
-  await client.query(`
+    await client.query(`
     DROP TABLE IF EXISTS users cascade;
   `);
 
-
-      
     console.log("Done dropping tables...");
   } catch (error) {
     console.error(error);
     throw error;
   }
-}  
+}
 
 // async function createTypes() {
 //   try{
 //     await client.query(`
 //     CREATE TYPE s_status AS ENUM ('pending', 'open', 'accepted', 'rejected');
-  
-  
-  
+
 //   `)
 //   console.log("Done making types...");
 //   } catch (error) {
 //     console.error(error);
 //     throw error;
 //   }
-//   }  
+//   }
 
 async function createTables() {
   try {
@@ -104,8 +94,7 @@ async function createTables() {
       );
   `);
 
-
-  await client.query(`
+    await client.query(`
   CREATE TABLE groups(
     id SERIAL PRIMARY KEY,
     "user_id" integer REFERENCES users(id),
@@ -116,7 +105,7 @@ async function createTables() {
     );
   `);
 
-  await client.query(`
+    await client.query(`
   CREATE TABLE event (
     event_id SERIAL PRIMARY KEY,
     "user_id" integer REFERENCES users(id),
@@ -131,7 +120,7 @@ async function createTables() {
 );
 `);
 
-await client.query(`
+    await client.query(`
 CREATE TABLE user_group ( 
   "user_id" integer References users(id),
   "group_id" integer REFERENCES groups(id)
@@ -141,17 +130,15 @@ CREATE TABLE user_group (
 
 `);
 
-      
+    //   await client.query(`
+    //   CREATE TABLE invitations (
+    //     "group_id" integer REFERENCES groups(id),
+    //     "inviter_id" integer REFERENCES users(id),
+    //     "invitee_id" integer REFERENCES users(id)
 
-  //   await client.query(`
-  //   CREATE TABLE invitations (
-  //     "group_id" integer REFERENCES groups(id),
-  //     "inviter_id" integer REFERENCES users(id),
-  //     "invitee_id" integer REFERENCES users(id)
-      
-  // );
-  
-  //   `);
+    // );
+
+    //   `);
 
     await client.query(`
     CREATE TABLE comment (
@@ -166,17 +153,12 @@ CREATE TABLE user_group (
   
     `);
 
-
-
-
-console.log("Done building tables...");
-} catch (error) {
-  console.error(error);
-  throw error;
+    console.log("Done building tables...");
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
-}
-
-
 
 async function createInitialUsers() {
   try {
@@ -185,7 +167,6 @@ async function createInitialUsers() {
       username: "o2boy",
       password: "pretty59",
       email: "o2boyo2@aol.com",
-     
     });
 
     await createUser({
@@ -193,12 +174,7 @@ async function createInitialUsers() {
       username: "trac",
       password: "music64",
       email: "trachkid@aol.com",
-   
     });
-
-
-
-
   } catch (error) {
     console.error(error);
     throw error;
@@ -208,21 +184,14 @@ async function createInitialUsers() {
 async function createExampleGroup() {
   try {
     await createGroup({
-
       group_name: "PV party planners",
       user_id: 1,
-      
-      
     });
 
     await createGroup({
-
       group_name: "PV ROCK PEOPLE",
       user_id: 1,
-     
-      
     });
-
   } catch (error) {
     console.error(error);
     throw error;
@@ -238,7 +207,7 @@ async function createExampleEvent() {
       isComfirmed: false,
       date: "07-25-2020",
       time: "11:00:00",
-      location: "My House"
+      location: "My House",
     });
 
     await createEvent({
@@ -249,7 +218,7 @@ async function createExampleEvent() {
       isComfirmed: false,
       date: "07-25-2020",
       time: "11:00:00",
-      location: "My House"
+      location: "My House",
     });
   } catch (error) {
     console.error(error);
@@ -257,22 +226,17 @@ async function createExampleEvent() {
   }
 }
 
-
-
-async function createExampleUserGroup(){
+async function createExampleUserGroup() {
   try {
     await createUG({
       user_id: 1,
       group_id: 1,
-      
     });
-
   } catch (error) {
     console.error(error);
     throw error;
   }
 }
-
 
 async function createExampleInvitations() {
   try {
@@ -280,9 +244,7 @@ async function createExampleInvitations() {
       group_id: 1,
       inviter_id: 1,
       invitee_id: 1,
-      status: "pending"
-     
-      
+      status: "pending",
     });
   } catch (error) {
     console.error(error);
@@ -290,24 +252,18 @@ async function createExampleInvitations() {
   }
 }
 
-
-async function createUserComments(){
+async function createUserComments() {
   try {
     await createComment({
       message: "Does everyone agree with this time?",
       user_id: 1,
       event_id: 1,
-      
-      
     });
-
-} catch (error) {
-console.error(error);
-throw error;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
-}
-
-
 
 async function rebuildDB(force = true) {
   try {
@@ -342,16 +298,15 @@ async function testDB() {
     console.log("EVENTS:", create_event);
 
     const create_group = await getAllGroup();
-    console.log("GROUPS: " ,create_group);
+    console.log("GROUPS: ", create_group);
 
     const create_usergg = await getAllUserGroup();
     console.log("User's Group", create_usergg);
 
- const create_invites = await getAllInvitations();
+    const create_invites = await getAllInvitations();
     console.log("Invites", create_invites);
 
-
-    const create_comments= await getAllComments();
+    const create_comments = await getAllComments();
     console.log("COMMENTS", create_comments);
 
     console.log("Done testing database...");
@@ -361,5 +316,5 @@ async function testDB() {
   }
 }
 
-rebuildDB()
+rebuildDB();
 // .then(testDB);

@@ -47,7 +47,7 @@ const FormForNewEvent = ({ userid }) => {
     console.log(formData);
     axios
       .post("api/events/newevent", formData, {
-        headers:  {Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then(() => {})
       .catch((error) => {

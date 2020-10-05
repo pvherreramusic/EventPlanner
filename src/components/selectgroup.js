@@ -35,7 +35,7 @@ const SelectGroups = ({ userid }) => {
       const response = await fetch(`/api/groups/${userid}/usergroup`);
       const body = await response.json();
       setItems(
-        body.group.map(({ group_name, id}) => ({
+        body.group.map(({ group_name, id }) => ({
           label: group_name,
           value: id,
         }))
@@ -51,7 +51,7 @@ const SelectGroups = ({ userid }) => {
   };
 
   console.log(value);
-  console.log(userid)
+  console.log(userid);
 
   if (value) {
     return (

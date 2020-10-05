@@ -1,12 +1,9 @@
 const { client } = require("./client");
 
-
 async function getUserGroupById(userid) {
-    try {
-      const {
-        rows
-      } = await client.query(
-        `
+  try {
+    const { rows } = await client.query(
+      `
         SELECT
         users.id,
         groups.group_name,
@@ -28,28 +25,24 @@ async function getUserGroupById(userid) {
           user_group.user_id
           
           HAVING 
-user_group.user_id = $1
+users.id = $1
 
 
               `,
-        [userid]
-      );
-      
+      [userid]
+    );
 
-  
-      return rows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    return rows;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
+}
 
-  async function matchingValue(userid) {
-    try {
-      const {
-        rows
-      } = await client.query(
-        `
+async function matchingValue(userid) {
+  try {
+    const { rows } = await client.query(
+      `
         SELECT
         groups.user_id
 
@@ -68,73 +61,66 @@ user_group.user_id = $1
 
 
               `,
-        [userid]
-      );
-      
+      [userid]
+    );
 
-  
-      return rows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    return rows;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
+}
 
-  async function createUG({group_id, user_id}) {
-    try {
-      const {
-        rows 
-      } = await client.query(
-        `
+async function createUG({ group_id, user_id }) {
+  try {
+    const { rows } = await client.query(
+      `
         INSERT INTO user_group (group_id ,user_id)
         VALUES ($1, $2)
         RETURNING *;
         `,
-        [group_id, user_id]
-      );
-  
-      return rows;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+      [group_id, user_id]
+    );
+
+    return rows;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+async function updateUserGroup(id, fields = {}) {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+
+  if (setString.length === 0) {
+    return;
   }
 
-  async function updateUserGroup(id, fields = {}) {
-    const setString = Object.keys(fields)
-      .map((key, index) => `"${key}"=$${index + 1}`)
-      .join(", ");
-  
-    if (setString.length === 0) {
-      return;
-    }
-  
-    try {
-      const {
-        rows: [user_group],
-      } = await client.query(
-        `
+  try {
+    const {
+      rows: [user_group],
+    } = await client.query(
+      `
               UPDATE user_group
               SET ${setString}
               WHERE id=${id}
               RETURNING *;
               `,
-        Object.values(fields)
-      );
-  
-      return user_group;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+      Object.values(fields)
+    );
+
+    return user_group;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
+}
 
-
-
-  module.exports = {
+module.exports = {
   getUserGroupById,
   createUG,
   updateUserGroup,
-  matchingValue
-  
-    };
+  matchingValue,
+};

@@ -5,7 +5,7 @@ const {
   doesUserExist,
   login,
   loginWithToken,
-  getUserByUsername
+  getUserByUsername,
 } = require("../db");
 
 userRouter.post("/register", async (req, res, next) => {
@@ -144,15 +144,15 @@ userRouter.post("/login", async (req, res, next) => {
   }
 });
 
-userRouter.get('/allusers', async(req, res, next) => {
+userRouter.get("/allusers", async (req, res, next) => {
   try {
-      const username = await getUserByUsername();
+    const username = await getUserByUsername();
 
-      res.send({
-         username
-      })
+    res.send({
+      username,
+    });
   } catch (error) {
-      next(error);
+    next(error);
   }
 });
 

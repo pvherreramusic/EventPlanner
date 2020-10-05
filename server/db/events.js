@@ -2,7 +2,8 @@ const { client } = require("./client");
 
 async function getEventByEventId(userId) {
   try {
-    const { rows} = await client.query(`
+    const { rows } = await client.query(
+      `
     SELECT
 
     event.user_id
@@ -26,13 +27,11 @@ event.user_id
 HAVING
 event.user_id = $1
     `,
-    [userId]
-    
+      [userId]
     );
 
-return rows;
-}
-  catch (error) {
+    return rows;
+  } catch (error) {
     throw error;
   }
 }
@@ -40,9 +39,7 @@ return rows;
 ///http://localhost:3001/api/events/event/
 async function getEventByUserId(eventid) {
   try {
-    const {
-      rows
-    } = await client.query(
+    const { rows } = await client.query(
       `
       
       SELECT
@@ -80,13 +77,11 @@ async function getEventByUserId(eventid) {
       
       
   HAVING
- event.event_id = $1
+  event.event_id = $1
             
         `,
-        [eventid]
+      [eventid]
     );
-
-    
 
     return rows;
   } catch (error) {
@@ -95,12 +90,9 @@ async function getEventByUserId(eventid) {
 }
 ///bygroup/
 
-
 async function getEventByGroupId(userid) {
   try {
-    const {
-      rows
-    } = await client.query(
+    const { rows } = await client.query(
       `
       SELECT
       event.event_id,
@@ -128,22 +120,14 @@ async function getEventByGroupId(userid) {
 
             
         `,
-        [userid]
+      [userid]
     );
-
-    
 
     return rows;
   } catch (error) {
     throw error;
   }
 }
-
-
-
-
-
-
 
 async function getAllEvents() {
   const { rows } = await client.query(`
@@ -154,9 +138,16 @@ async function getAllEvents() {
   return rows;
 }
 
-
-
-async function createEvent({user_id, group_id, title, description, isComfirmed = false, date, time, location}) {
+async function createEvent({
+  user_id,
+  group_id,
+  title,
+  description,
+  isComfirmed = false,
+  date,
+  time,
+  location,
+}) {
   try {
     const {
       rows: [event],
@@ -187,7 +178,7 @@ async function updateEvent(eventid, fields = {}) {
 
   try {
     const {
-      rows: [event]
+      rows: [event],
     } = await client.query(
       `Update event
     SET ${setString}
@@ -220,11 +211,10 @@ async function deleteEvent(eventId) {
 }
 
 module.exports = {
-getAllEvents,
-getEventByUserId,
-getEventByGroupId,
-createEvent,
-updateEvent,
-getEventByEventId
-
-}
+  getAllEvents,
+  getEventByUserId,
+  getEventByGroupId,
+  createEvent,
+  updateEvent,
+  getEventByEventId,
+};

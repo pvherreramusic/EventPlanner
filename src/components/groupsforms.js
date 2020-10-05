@@ -1,25 +1,15 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Button, Form, Header, } from "semantic-ui-react";
-
-
+import { Button, Form, Header } from "semantic-ui-react";
 
 const CreateGroup = () => {
   const initialFormData = {
-   group_name: "",
-   description: "",
-   
-
-   
-
+    group_name: "",
+    description: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
   const [successForm, setSuccess] = useState(false);
-  
-  
-
-
 
   const handleChange = (e) => {
     setFormData({
@@ -37,31 +27,23 @@ const CreateGroup = () => {
       .post("api/groups/newgroup", formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
-      .then(() => {
-      })
+      .then(() => {})
       .catch((error) => {
         alert(error.message);
       });
   };
-  
-
 
   return (
-
-
-
     <>
       <div>
-
-
         {successForm ? (
           <>
             <Header as="h1" textAlign="center">
-              Your Details are Complete. Go Check Out Your Event in the Groups Page.
+              Your Details are Complete. Go Check Out Your Event in the Groups
+              Page.
             </Header>
           </>
         ) : (
-
           <Header as="h1" textAlign="center">
             Enter correct fields
             <Form>
@@ -71,26 +53,19 @@ const CreateGroup = () => {
                   name="group_name"
                   onChange={handleChange}
                 />
-                 <Form.TextArea
+                <Form.TextArea
                   label="Description"
                   name="description"
                   onChange={handleChange}
                 />
-               
-
-
-            
               </Form.Group>
               <Button onClick={handleSubmit}>Create Group</Button>
             </Form>
           </Header>
-          )}
-        
-    
+        )}
       </div>
-  
-
-  </>
-  )}
+    </>
+  );
+};
 
 export default CreateGroup;

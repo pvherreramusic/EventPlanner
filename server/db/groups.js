@@ -1,9 +1,9 @@
 const { client } = require("./client");
 
-async function createGroup({group_name, user_id, description}) {
+async function createGroup({ group_name, user_id, description }) {
   try {
     const {
-      rows: [group]
+      rows: [group],
     } = await client.query(
       `
       INSERT INTO groups (group_name ,user_id ,description)
@@ -20,7 +20,6 @@ async function createGroup({group_name, user_id, description}) {
   }
 }
 
-
 async function getAllGroup() {
   const { rows } = await client.query(`
   SELECT *
@@ -32,9 +31,7 @@ async function getAllGroup() {
 ////api/groups/selectedgroup/${groupid}`
 async function getSelectedGroup(groupid) {
   try {
-    const {
-      rows
-    } = await client.query(
+    const { rows } = await client.query(
       `
       SELECT
       
@@ -60,11 +57,6 @@ async function getSelectedGroup(groupid) {
   }
 }
 
-
-
-
-
-
 async function updateGroup(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -76,7 +68,7 @@ async function updateGroup(id, fields = {}) {
 
   try {
     const {
-      rows: [group]
+      rows: [group],
     } = await client.query(
       `Update groups
     SET ${setString}
@@ -94,9 +86,7 @@ async function updateGroup(id, fields = {}) {
 
 async function getGroupById(userid) {
   try {
-    const {
-      rows
-    } = await client.query(
+    const { rows } = await client.query(
       `
       SELECT
       groups.group_name,
@@ -127,12 +117,10 @@ async function getGroupById(userid) {
   }
 }
 
-
 module.exports = {
-getAllGroup,
-getGroupById,
-createGroup,
-updateGroup,
-getSelectedGroup
+  getAllGroup,
+  getGroupById,
+  createGroup,
+  updateGroup,
+  getSelectedGroup,
 };
-

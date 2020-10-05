@@ -84042,8 +84042,6 @@ const CommentForm = ({
         [e.target.name]: e.target.value.trim()
       });
     }
-
-    ;
   };
 
   const handleSubmit = e => {
@@ -84167,8 +84165,6 @@ const SelectGroups = () => {
         [e.target.name]: e.target.value
       });
     }
-
-    ;
   };
 
   const handleSubmit = e => {
@@ -84207,8 +84203,6 @@ const SelectGroups = () => {
       value: value
     }, label))));
   }
-
-  ;
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SelectGroups);
@@ -84335,14 +84329,14 @@ __webpack_require__.r(__webpack_exports__);
 const HomePage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Container"], {
   text: true,
   style: {
-    marginTop: '7em'
+    marginTop: "7em"
   }
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Header"], {
   as: "h1"
 }, "EVENT PLANNNER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "THANK YOU FOR USING THIS APP TO PLAN A EVENT WITH YOUR GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "LETS PARTY!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "HOW TO USE THE APP IF YOU ARE NEW"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP ONE: SIGN UP or LOG IN"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP TWO MAKE A GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP THREE GO TO EXPLORE GROUPS AND JOIN YOUR SELECTED GROUP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP FOUR MAKE AN EVENT"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "STEP FIVE CHECK OUT YOUR EVENT and TELL OTHERS TO JOIN GROUPS and CHECK OUT THE EVENTS. YOU CAN COMMENT AND TALK TO EACH OTHER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "FOR THOSE WHO ARE NOT NEW"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "CHECK OUT NEW GROUPS AND JOIN GROUPS AND CHECK OUT THEIR EVENTS BY DIFFERENT USERS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Image"], {
   src: "https://media.timeout.com/images/105347841/630/472/image.jpg",
   style: {
-    marginTop: '2em'
+    marginTop: "2em"
   }
 })));
 
@@ -84438,12 +84432,12 @@ class SendInvite extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   constructor(props) {
     super(props);
     this.state = {
-      yourname: '',
-      personname: '',
-      email: '',
-      subject: '',
-      message: '',
-      group: ''
+      yourname: "",
+      personname: "",
+      email: "",
+      subject: "",
+      message: "",
+      group: ""
     };
   }
 
@@ -84490,20 +84484,20 @@ class SendInvite extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       url: "/sendemail",
       data: this.state
     }).then(response => {
-      if (response.data.status === 'success') {
+      if (response.data.status === "success") {
         this.resetForm();
-      } else if (response.data.status === 'fail') {}
+      } else if (response.data.status === "fail") {}
     });
   }
 
   resetForm() {
     this.setState({
-      yourname: '',
-      personname: '',
-      email: '',
-      subject: '',
-      message: '',
-      group: ''
+      yourname: "",
+      personname: "",
+      email: "",
+      subject: "",
+      message: "",
+      group: ""
     });
   }
 
@@ -84555,7 +84549,7 @@ class SendInvite extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       onChange: this.onGroupChange.bind(this)
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit"
-    }, "submit your message"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "*Please click once on the submit button, otherwise your friends will get more emails than should! ")));
+    }, "submit your message"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "*Please click once on the submit button, otherwise your friends will get more emails than should!", " ")));
   }
 
 }
@@ -84680,7 +84674,7 @@ const Login = props => {
         as: "a",
         primary: true,
         style: {
-          marginLeft: '0.5em'
+          marginLeft: "0.5em"
         }
       }, "Login"),
       basic: true,
@@ -85118,6 +85112,7 @@ const Example = ({
   };
 
   const updateEvent = ({
+    userid,
     eventid,
     newTitle,
     newDescription
@@ -85127,10 +85122,12 @@ const Example = ({
       body: JSON.stringify({
         title: newTitle,
         event_id: eventid,
+        user_id: userid,
         description: newDescription
       }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     }).then(response => response.json()).then(json => {
       console.log(json);
@@ -85140,11 +85137,13 @@ const Example = ({
   };
 
   const onSave = ({
+    userid,
     eventid,
     newTitle,
     newDescription
   }) => {
     updateEvent({
+      userid,
       eventid,
       newTitle,
       newDescription
@@ -85170,6 +85169,7 @@ const Example = ({
   }) : item.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, inEditMode.status && inEditMode.rowKey === item.event_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "btn-success",
     onClick: () => onSave({
+      userid: item.user_id,
       eventid: item.event_id,
       newTitle: Title
     })
@@ -85182,6 +85182,7 @@ const Example = ({
   }, "Cancel")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "btn-primary",
     onClick: () => onEdit({
+      userid: item.user_id,
       eventid: item.event_id,
       oldTitle: item.title
     })

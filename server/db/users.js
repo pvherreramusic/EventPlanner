@@ -3,38 +3,29 @@ const jwt = require("jsonwebtoken");
 
 const { client } = require("./client");
 
-const promisifiedHash = (password) => new Promise(
-  (resolve, reject) => {
+const promisifiedHash = (password) =>
+  new Promise((resolve, reject) => {
     bcrypt.hash(password, 10, (error, hash) => {
-        if (error)
-          reject(error);
-        else
-          resolve(hash);
+      if (error) reject(error);
+      else resolve(hash);
     });
-  }
-);
+  });
 
-const promisifiedSign = (id) => new Promise(
-  (resolve, reject) => {
+const promisifiedSign = (id) =>
+  new Promise((resolve, reject) => {
     jwt.sign({ id }, process.env.SECRET, (error, token) => {
-      if (error)
-        reject(error);
-      else
-        resolve(token);
+      if (error) reject(error);
+      else resolve(token);
     });
-  }
-);
+  });
 
-const promisifiedVerify = (token) => new Promise(
-  (resolve, reject) => {
+const promisifiedVerify = (token) =>
+  new Promise((resolve, reject) => {
     jwt.verify(token, process.env.SECRET, (error, decoded) => {
-      if (error)
-        reject(error);
-      else
-        resolve(decoded);
+      if (error) reject(error);
+      else resolve(decoded);
     });
-  }
-);
+  });
 
 async function createUser({ name, username, password, email }) {
   const hashedPassword = await promisifiedHash(password);
@@ -70,9 +61,6 @@ async function getAllUsers() {
   return rows;
 }
 
-
-
-
 async function getUserById(userId) {
   try {
     const {
@@ -102,9 +90,7 @@ async function getUserById(userId) {
 
 async function getUserByUsername() {
   try {
-    const {
-      rows,
-    } = await client.query(
+    const { rows } = await client.query(
       `
       SELECT
       users.id,
@@ -174,10 +160,13 @@ async function doesUserExist(username = "", email = "") {
   }
 
   if (username && username.length) {
-      const usernameQuery = await client.query(`
+    const usernameQuery = await client.query(
+      `
         SELECT id FROM users
         WHERE username = $1;
-      `, [username]);
+      `,
+      [username]
+    );
 
     if (usernameQuery.rows.length > 0) {
       return [true, "username"];
@@ -185,10 +174,13 @@ async function doesUserExist(username = "", email = "") {
   }
 
   if (email && email.length) {
-    const emailQuery = await client.query(`
+    const emailQuery = await client.query(
+      `
       SELECT id FROM users
       WHERE email = $1;
-    `, [email]);
+    `,
+      [email]
+    );
 
     if (emailQuery.rows.length > 0) {
       return [true, "email"];
@@ -203,20 +195,19 @@ const login = async (email = "", password = "") => {
     return [null, ""];
   }
 
-  const { rows: [user] } = await client.query(`
+  const {
+    rows: [user],
+  } = await client.query(
+    `
     SELECT * FROM users
     WHERE email = $1;
-  `, [email]);
+  `,
+    [email]
+  );
 
- ;
+  if (!(await bcrypt.compare(password, user.password))) return [null, ""];
 
-  if (!(await bcrypt.compare(password, user.password)))
-    return [null, ""];
-
-  return [
-    user,
-    await promisifiedSign(user.id)
-  ];
+  return [user, await promisifiedSign(user.id)];
 };
 
 const loginWithToken = async (token = "") => {
@@ -238,5 +229,5 @@ module.exports = {
   login,
   loginWithToken,
   promisifiedVerify,
-  getUserByUsername
+  getUserByUsername,
 };

@@ -1,80 +1,67 @@
 const express = require("express");
 const invitationsRouter = express.Router();
 const { verifyToken } = require("./utils");
-const {
-  getAllInvitations,
-  createInvitations,
-
-} = require('../db');
-
+const { getAllInvitations, createInvitations } = require("../db");
 
 invitationsRouter.use((req, res, next) => {
-    console.log("A request is being made to /invitations");
-    next();
-  });
-
-invitationsRouter.get('/', async(req, res, next) => {
-    try {
-        const invitations = await getAllInvitations();
-
-        res.send({
-            invitations
-        })
-    } catch (error) {
-        next(error);
-    }
+  console.log("A request is being made to /invitations");
+  next();
 });
 
-invitationsRouter.get('issued/:userId', async(req, res, next) => {
+invitationsRouter.get("/", async (req, res, next) => {
+  try {
+    const invitations = await getAllInvitations();
 
-    const { userId } = req.params;
-    
-   
+    res.send({
+      invitations,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+invitationsRouter.get("issued/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    const issued = await getInvitationsById(userId);
+
+    res.send(issued);
+  } catch (error) {
+    next(error);
+  }
+});
+
+invitationsRouter.get("received/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    const received = await getInvitationsById(userId);
+
+    res.send(received);
+  } catch (error) {
+    next(error);
+  }
+});
+
+invitationsRouter.post(
+  "/newinvitations",
+  verifyToken,
+  async (req, res, next) => {
     try {
-      
-      const issued = await getInvitationsById(userId);
-      
-      res.send(issued);
-    } catch (error) {
-      next(error);
-    }
-  });
+      const { message } = req.body;
 
-
-  invitationsRouter.get('received/:userId', async(req, res, next) => {
-
-    const { userId } = req.params;
-    
-   
-    try {
-      
-      const received = await getInvitationsById(userId);
-      
-      res.send(received);
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  invitationsRouter.post("/newinvitations", verifyToken, async (req, res, next) => {
-    try {
-  
-  
-      const {
-        message
-      } = req.body;
-  
       const invitationsInfo = {
-        message
+        message,
       };
-  
+
       await createInvitations(invitationsInfo);
-  
+
       res.sendStatus(200);
     } catch (error) {
       next(error);
     }
-  });
+  }
+);
 
-
-  module.exports = invitationsRouter;
+module.exports = invitationsRouter;

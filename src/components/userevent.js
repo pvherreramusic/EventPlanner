@@ -30,16 +30,18 @@ const Example = ({ eventid }) => {
     setDescription(oldDescription);
   };
 
-  const updateEvent = ({ eventid, newTitle, newDescription}) => {
+  const updateEvent = ({ userid, eventid, newTitle, newDescription }) => {
     fetch(`/api/events/event/${eventid}`, {
       method: "PUT",
       body: JSON.stringify({
         title: newTitle,
         event_id: eventid,
+        user_id: userid,
         description: newDescription,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((response) => response.json())
@@ -51,8 +53,8 @@ const Example = ({ eventid }) => {
       });
   };
 
-  const onSave = ({ eventid, newTitle, newDescription }) => {
-    updateEvent({ eventid, newTitle, newDescription });
+  const onSave = ({ userid, eventid, newTitle, newDescription }) => {
+    updateEvent({ userid, eventid, newTitle, newDescription });
   };
 
   const onCancel = () => {
@@ -99,7 +101,11 @@ const Example = ({ eventid }) => {
                     <button
                       className={"btn-success"}
                       onClick={() =>
-                        onSave({ eventid: item.event_id, newTitle: Title })
+                        onSave({
+                          userid: item.user_id,
+                          eventid: item.event_id,
+                          newTitle: Title,
+                        })
                       }
                     >
                       Save
@@ -117,24 +123,24 @@ const Example = ({ eventid }) => {
                   <button
                     className={"btn-primary"}
                     onClick={() =>
-                      onEdit({ eventid: item.event_id, oldTitle: item.title })
+                      onEdit({
+                        userid: item.user_id,
+                        eventid: item.event_id,
+                        oldTitle: item.title,
+                      })
                     }
                   >
                     Edit
                   </button>
                 )}
               </td>
-             
+
               <td>{item.location}</td>
               <td>
                 {item.date}
                 {item.time}
-               
               </td>
-              <td>
-                {item.name}
-               
-              </td>
+              <td>{item.name}</td>
               <td>
                 {inEditMode.status && inEditMode.rowKey === item.event_id ? (
                   <input
