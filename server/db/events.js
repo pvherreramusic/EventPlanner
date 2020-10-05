@@ -4,35 +4,27 @@ async function getEventByEventId(userId) {
   try {
     const { rows} = await client.query(`
     SELECT
-    event.event_id,
-    event.user_id,
-    event.group_id,
-    event.title,
-    event.description,
-    event.date,
-    event.time,
-    event.location,
-    users.name
-    
+
+    event.user_id
+
+
+
     
     
 FROM
     event
-INNER JOIN users ON (event.user_id = users.id)
+
+
+
+
 GROUP BY 
-event.event_id,
-event.title,
-event.user_id,
-    event.description,
-    event.date,
-    event.time,
-    event.location,
-    users.name,
-    event.group_id
+
+event.user_id
+
     
     
 HAVING
-event.event_id = $1
+event.user_id = $1
     `,
     [userId]
     
@@ -88,7 +80,7 @@ async function getEventByUserId(eventid) {
       
       
   HAVING
-  event.event_id = $1
+ event.event_id = $1
             
         `,
         [eventid]
@@ -184,9 +176,8 @@ async function createEvent({user_id, group_id, title, description, isComfirmed =
   }
 }
 
-async function updateEvent(id, fields = {}) {
+async function updateEvent(eventid, fields = {}) {
   const setString = Object.keys(fields)
- 
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
 
@@ -196,18 +187,15 @@ async function updateEvent(id, fields = {}) {
 
   try {
     const {
-      rows: [event],
+      rows: [event]
     } = await client.query(
-      `
-              UPDATE event
-              SET ${setString}
-              WHERE id=${id}
-             
-              RETURNING *;
-              `,
+      `Update event
+    SET ${setString}
+    WHERE event_id=${eventid}
+    RETURNING *;
+    `,
       Object.values(fields)
     );
-
     return event;
   } catch (error) {
     console.error(error);

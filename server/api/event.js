@@ -96,40 +96,58 @@ eventRouter.get('/bygroup/:groupid',async(req, res, next) => {
 });
 
 
-eventRouter.patch("/:eventId", verifyToken, async (req, res, next) => {
-  const { eventId } = req.params;
-  const { userId, title, description} = req.body;
-  const updateFields = {};
+eventRouter.put("/event/:eventid", async (req, res, next) => {
 
-  if (userId) {
-    updateFields.userId = userId;
-  }
 
-  if (price) {
+const {eventid} = req.params;
+const {event_id, title, description} = req.body;
+const updateFields = {};
+
+console.log('Entered /links/:id PATCH. id: ', eventid, 'req.body: ', req.body);
+
+if(event_id){
+updateFields.event_id = event_id;
+
+}
+
+if (title){
     updateFields.title = title;
-  }
-
-  if (quantity) {
+}
+if (description) {
     updateFields.description = description;
-  }
+}
 
-  try {
-    const eventByID = await getEventById(eventId);
 
-    if (eventByID) {
-      const updatedEvent = await updateEvent(eventId, updateFields);
-      res.send({ event: updatedEvent });
-    } else {
-      next({
-        name: "UpdateEventError",
-        description: "Error updating Event",
-      });
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-});
+console.log('Update fields lenght: ', updateFields);
+
+
+try {
+    const updatedEVE = await updateEvent(eventid, updateFields);
+    console.log('Edited link: ', updatedEVE);
+    res.send({
+        message: 'Event updated',
+        data: updatedEVE,
+        status: true,
+    });
+} catch (error) {
+    next(error);
+}
+})
+
+// const {eventid} = req.params
+
+//     try{
+//         const updatedEve =  updateEvent(eventid)
+//         if (updatedEve){
+//             res.send(updatedEve)
+//         }
+//     }catch(error){
+//         throw error}
+// }
+// );
+
+
+
 
 
 eventRouter.post("/newevent", verifyToken, async (req, res, next) => {

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-const Comments = ({userid}) => {
+const Comments = ({ userid }) => {
   const [comments, setComments] = useState([]);
-
 
   useEffect(() => {
     fetch(`/api/comments/eventcomments/${userid}`)
@@ -24,6 +23,6 @@ const Comments = ({userid}) => {
       ))}
     </div>
   );
-}
+};
 
-export default Comments
+export default Comments;

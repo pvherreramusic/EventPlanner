@@ -4,7 +4,8 @@ const { verifyToken } = require("./utils");
 const {
 createComment,
 getAllComments,
-getCommentEventId
+getCommentEventId,
+getEventById
 
 } = require('../db');
 

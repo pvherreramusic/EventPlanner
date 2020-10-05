@@ -11,3 +11,4 @@ export { default as SelectGroups } from "./selectgroup";
 export { default as Example} from "./userevent";
 export { default as GroupPageEx} from "./grouppageEx";
 export {default as SendInvite} from "./invite";
+export {default as EditableInput } from "./edit";

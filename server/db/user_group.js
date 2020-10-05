@@ -8,29 +8,69 @@ async function getUserGroupById(userid) {
       } = await client.query(
         `
         SELECT
-      groups.group_name,
-        groups.id,
-        groups.user_id,
-        user_group.group_id,
-        user_group.user_id
-     FROM
-         user_group
-     INNER JOIN groups ON (groups.id = user_group.group_id)
-    
-     GROUP BY
-     groups.group_name,
-        groups.id,
-        groups.user_id,
-        user_group.group_id,
-        user_group.user_id
-        
-        HAVING 
-        user_group.user_id = $1
+        users.id,
+        groups.group_name,
+          groups.id,
+          groups.user_id,
+          user_group.group_id,
+          user_group.user_id
+       FROM
+           user_group
+       INNER JOIN groups ON (groups.id = user_group.group_id)
+       INNER JOIN users ON ( users.id = user_group.user_id)
+      
+       GROUP BY
+        users.id,
+       groups.group_name,
+          groups.id,
+          groups.user_id,
+          user_group.group_id,
+          user_group.user_id
+          
+          HAVING 
+user_group.user_id = $1
 
 
               `,
         [userid]
       );
+      
+
+  
+      return rows;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async function matchingValue(userid) {
+    try {
+      const {
+        rows
+      } = await client.query(
+        `
+        SELECT
+        groups.user_id
+
+     FROM
+         user_group
+     INNER JOIN groups ON (groups.id = user_group.group_id)
+    
+     GROUP BY
+
+
+        groups.user_id
+
+        
+        HAVING 
+        groups.user_id = $1
+
+
+              `,
+        [userid]
+      );
+      
 
   
       return rows;
@@ -94,6 +134,7 @@ async function getUserGroupById(userid) {
   module.exports = {
   getUserGroupById,
   createUG,
-  updateUserGroup
+  updateUserGroup,
+  matchingValue
   
     };

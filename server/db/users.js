@@ -79,7 +79,7 @@ async function getUserById(userId) {
       rows: [user],
     } = await client.query(
       `
-            SELECT *
+            SELECT id
             FROM users
             WHERE id=$1;
             `,

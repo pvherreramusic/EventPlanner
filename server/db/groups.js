@@ -37,6 +37,7 @@ async function getSelectedGroup(groupid) {
     } = await client.query(
       `
       SELECT
+      
       groups.id, groups.group_name, groups.description
             
             
@@ -98,18 +99,22 @@ async function getGroupById(userid) {
     } = await client.query(
       `
       SELECT
+      groups.group_name,
+        groups.id,
+        groups.user_id
+
+     FROM
+         user_group
+     INNER JOIN groups ON (groups.id = user_group.group_id)
     
-      groups.user_id,
-      groups.group_name
-   FROM
-       groups
-   
-   
-   GROUP BY
-      groups.user_id,
-      groups.group_name
-      
-      HAVING  groups.user_id = $1
+     GROUP BY
+     groups.group_name,
+        groups.id,
+        groups.user_id
+
+        
+        HAVING 
+        groups.id = $1
     
     `,
       [userid]
